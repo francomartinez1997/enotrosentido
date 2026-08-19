@@ -18,6 +18,11 @@ export const site = {
     featuredTrack: '79rZVrm2nE4xLOpMxmZB0y',
     album: '27PHU7vkDNYlOOuBzrtFbm',
   },
+  youtube: {
+    enVivo: 'Dqpims4Bm0g',
+    enVivoUrl:
+      'https://www.youtube.com/watch?v=Dqpims4Bm0g&list=RDDqpims4Bm0g&start_radio=1',
+  },
   nav: [
     { label: 'Nosotros', href: '#nosotros' },
     { label: 'Música', href: '#musica' },

@@ -122,6 +122,12 @@ html[data-theme='light'] {
     border: 0;
   }
 
+  .youtube-embed {
+    display: block;
+    width: 100%;
+    border: 0;
+  }
+
   @media (min-width: 1024px) {
     .spotify-embed {
       height: 352px;

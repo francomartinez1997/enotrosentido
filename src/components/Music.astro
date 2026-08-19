@@ -24,7 +24,7 @@ import { site } from '../data/site';
     </div>
 
     <div class="grid gap-6 lg:grid-cols-2 lg:items-start">
-      <div class="flex flex-col overflow-hidden border border-theme">
+      <div class="overflow-hidden border border-theme">
         <p class="border-b border-theme px-4 py-3 text-sm text-theme-muted">
           Destacado · Cuánto más
         </p>
@@ -38,7 +38,7 @@ import { site } from '../data/site';
           title="Spotify — Cuánto más"></iframe>
       </div>
 
-      <div class="flex flex-col overflow-hidden border border-theme">
+      <div class="overflow-hidden border border-theme">
         <p class="border-b border-theme px-4 py-3 text-sm text-theme-muted">
           Álbum · La espera (2024)
         </p>
@@ -50,6 +50,32 @@ import { site } from '../data/site';
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
           loading="lazy"
           title="Spotify — La espera"></iframe>
+      </div>
+    </div>
+
+    <div class="mt-10 md:mt-12">
+      <div
+        class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between"
+      >
+        <p class="text-sm text-theme-muted">En vivo · En tus ojos · Pez Volcán 2024</p>
+        <a
+          href={site.youtube.enVivoUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-sm text-accent transition hover:text-theme"
+        >
+          Ver en YouTube →
+        </a>
+      </div>
+      <div class="overflow-hidden border border-theme">
+        <iframe
+          class="youtube-embed aspect-video w-full"
+          src={`https://www.youtube.com/embed/${site.youtube.enVivo}`}
+          title="YouTube — En tus ojos en vivo"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+          loading="lazy"></iframe>
       </div>
     </div>
   </div>
