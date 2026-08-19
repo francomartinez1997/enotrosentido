@@ -75,8 +75,13 @@ import { site } from '../data/site';
 
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
-    document.documentElement.style.colorScheme = theme;
+    document.documentElement.style.colorScheme =
+      theme === 'light' ? 'only light' : 'dark';
     localStorage.setItem('theme', theme);
+    const schemeMeta = document.getElementById('color-scheme-meta');
+    if (schemeMeta) {
+      schemeMeta.setAttribute('content', theme === 'light' ? 'only light' : 'dark');
+    }
     const meta = document.getElementById('theme-color-meta');
     if (meta) {
       meta.setAttribute('content', theme === 'light' ? '#e4e4e7' : '#0a0a0a');
