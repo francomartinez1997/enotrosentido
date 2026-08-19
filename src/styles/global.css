@@ -518,6 +518,10 @@ html[data-theme='light'] .theme-icon-moon {
     gap: 0.75rem;
   }
 
+  .gallery-tile {
+    min-height: 0;
+  }
+
   .gallery-tile--hero {
     grid-column: 1 / 3;
     grid-row: 1 / 3;
@@ -525,6 +529,12 @@ html[data-theme='light'] .theme-icon-moon {
   }
 
   .gallery-tile:not(.gallery-tile--hero):not(.gallery-tile--wide) {
+    aspect-ratio: auto;
+  }
+
+  .gallery-tile--wide {
+    grid-column: 1 / -1;
+    grid-row: 5;
     aspect-ratio: auto;
   }
 
@@ -576,11 +586,6 @@ html[data-theme='light'] .theme-icon-moon {
   .gallery-tile:nth-child(11) {
     grid-column: 3 / 5;
     grid-row: 4;
-  }
-
-  .gallery-tile--wide {
-    grid-column: 1 / -1;
-    grid-row: 5;
   }
 }
 
