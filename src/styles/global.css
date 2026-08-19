@@ -77,6 +77,99 @@ html[data-theme='light'] {
   }
 }
 
+.parallax-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 1;
+  background-color: var(--eos-bg);
+}
+
+.parallax-bg__track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  width: 100%;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+.parallax-bg__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 28%,
+    rgb(0 0 0 / 0.92) 48%,
+    rgb(0 0 0 / 0.72) 62%,
+    rgb(0 0 0 / 0.45) 76%,
+    rgb(0 0 0 / 0.18) 90%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 28%,
+    rgb(0 0 0 / 0.92) 48%,
+    rgb(0 0 0 / 0.72) 62%,
+    rgb(0 0 0 / 0.45) 76%,
+    rgb(0 0 0 / 0.18) 90%,
+    transparent 100%
+  );
+}
+
+html[data-theme='dark'] .parallax-bg__image {
+  filter: blur(1.5px) brightness(0.4);
+}
+
+.parallax-bg__overlay {
+  position: absolute;
+  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+}
+
+html[data-theme='dark'] .parallax-bg__overlay {
+  background: linear-gradient(
+    to bottom,
+    rgb(10 10 10 / 0.52) 0%,
+    rgb(10 10 10 / 0.62) 32%,
+    rgb(10 10 10 / 0.34) 48%,
+    rgb(10 10 10 / 0.14) 58%,
+    transparent 66%,
+    color-mix(in srgb, var(--eos-bg) 10%, transparent) 72%,
+    color-mix(in srgb, var(--eos-bg) 28%, transparent) 80%,
+    color-mix(in srgb, var(--eos-bg) 50%, transparent) 87%,
+    color-mix(in srgb, var(--eos-bg) 72%, transparent) 93%,
+    color-mix(in srgb, var(--eos-bg) 88%, transparent) 97%,
+    var(--eos-bg) 100%
+  );
+}
+
+html[data-theme='light'] .parallax-bg {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .parallax-bg {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parallax-bg {
+    display: none;
+  }
+}
+
 @layer utilities {
   .text-theme {
     color: var(--eos-text);

@@ -33,6 +33,9 @@ export const site = {
 /** Imagen principal del hero */
 export const heroImage = '/images/gallery/foto-de-la-banda.jpg';
 
+/** Fondo parallax (solo tema oscuro, desktop) */
+export const parallaxBackgroundImage = '/images/gallery/portada.jpg';
+
 export const aboutText = {
   lead: 'Un proyecto artísticamente ambicioso y descontracturado. Rock moderno con tintes de pop y géneros experimentales.',
   paragraphs: [
@@ -49,22 +52,22 @@ export const galleryImages = [
     caption: 'Galería 1',
   },
   {
-    src: '/images/gallery/galeria2.png',
+    src: '/images/gallery/galeria2.jpg',
     alt: 'En otro sentido — galería 2',
     caption: 'Galería 2',
   },
   {
-    src: '/images/gallery/galeria3.png',
+    src: '/images/gallery/galeria3.jpg',
     alt: 'En otro sentido — galería 3',
     caption: 'Galería 3',
   },
   {
-    src: '/images/gallery/galeria4.png',
+    src: '/images/gallery/galeria4.jpg',
     alt: 'En otro sentido — galería 4',
     caption: 'Galería 4',
   },
   {
-    src: '/images/gallery/galeria5.png',
+    src: '/images/gallery/galeria5.jpg',
     alt: 'En otro sentido — galería 5',
     caption: 'Galería 5',
   },
@@ -84,7 +87,7 @@ export const galleryImages = [
     caption: 'Galería 9',
   },
   {
-    src: '/images/gallery/galeria10.png',
+    src: '/images/gallery/galeria10.jpg',
     alt: 'En otro sentido — galería 10',
     caption: 'Galería 10',
   },
@@ -94,7 +97,7 @@ export const galleryImages = [
     caption: 'Galería 11',
   },
   {
-    src: '/images/gallery/galeria13.png',
+    src: '/images/gallery/galeria13.jpg',
     alt: 'En otro sentido — galería 13',
     caption: 'Galería 13',
   },

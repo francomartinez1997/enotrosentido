@@ -1,0 +1,86 @@
+---
+import { parallaxBackgroundImage } from '../data/site';
+---
+
+<div id="parallax-bg" class="parallax-bg" aria-hidden="true">
+  <div class="parallax-bg__track">
+    <img
+      class="parallax-bg__image"
+      src={parallaxBackgroundImage}
+      alt=""
+      loading="eager"
+      decoding="async"
+    />
+    <div class="parallax-bg__overlay"></div>
+  </div>
+</div>
+
+<script>
+  const parallaxRoot = document.getElementById('parallax-bg');
+  const parallaxTrack = parallaxRoot?.querySelector<HTMLElement>(
+    '.parallax-bg__track',
+  );
+  const musicSection = document.getElementById('musica');
+  const prefersReducedMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)',
+  );
+  const isMobile = window.matchMedia('(max-width: 767px)');
+
+  let ticking = false;
+
+  function isActive() {
+    return (
+      document.documentElement.getAttribute('data-theme') === 'dark' &&
+      !prefersReducedMotion.matches &&
+      !isMobile.matches
+    );
+  }
+
+  function updateParallax() {
+    if (!parallaxRoot || !parallaxTrack) return;
+
+    if (!isActive()) {
+      parallaxRoot.style.opacity = '0';
+      parallaxTrack.style.transform = '';
+      return;
+    }
+
+    const scrollY = window.scrollY;
+    const parallaxFactor = 0.35;
+
+    parallaxTrack.style.transform = `translate3d(0, ${-scrollY * parallaxFactor}px, 0)`;
+
+    if (musicSection) {
+      const fadeStart = musicSection.offsetTop - window.innerHeight * 0.45;
+      const fadeEnd = musicSection.offsetTop - 48;
+      const progress = (scrollY - fadeStart) / (fadeEnd - fadeStart);
+      parallaxRoot.style.opacity = String(
+        1 - Math.min(1, Math.max(0, progress)),
+      );
+      return;
+    }
+
+    parallaxRoot.style.opacity = '1';
+  }
+
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      updateParallax();
+      ticking = false;
+    });
+  }
+
+  updateParallax();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', updateParallax);
+  prefersReducedMotion.addEventListener('change', updateParallax);
+  isMobile.addEventListener('change', updateParallax);
+
+  const themeObserver = new MutationObserver(updateParallax);
+  themeObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme'],
+  });
+</script>
