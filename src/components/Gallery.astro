@@ -1,56 +1,53 @@
 ---
 import { galleryImages } from '../data/site';
-
-const shapeClass = {
-  arch: 'shape-arch',
-  circle: 'shape-circle aspect-square',
-  slant: 'shape-slant',
-} as const;
 ---
 
 <section id="galeria" class="scroll-mt-24 py-16 md:py-24">
   <div class="mx-auto max-w-6xl px-4 sm:px-6">
-    <p class="section-label mb-3">Fotos</p>
-    <h2 class="display-title mb-8 text-4xl text-theme sm:text-5xl md:text-6xl">
-      Galería
-    </h2>
-    <p class="mb-8 max-w-lg text-theme-muted">
-      Tocá una imagen para ampliarla.
-    </p>
+    <div class="mb-10 flex flex-col gap-4 md:mb-12 md:flex-row md:items-end md:justify-between">
+      <div>
+        <p class="section-label mb-3">Fotos</p>
+        <h2 class="display-title text-4xl text-theme sm:text-5xl md:text-6xl">
+          Galería
+        </h2>
+      </div>
+      <p class="max-w-xs text-sm text-theme-muted md:text-right">
+        Tocá una foto para verla en grande.
+      </p>
+    </div>
 
-    <div class="grid grid-cols-2 gap-3 overflow-visible sm:gap-4 md:grid-cols-3 md:gap-8">
+    <div class="gallery-grid">
       {
-        galleryImages.map((item, i) => (
+        galleryImages.map((item, i) => {
+          const caption = `eos ${i + 1}`;
+          return (
           <button
             type="button"
             class:list={[
-              'gallery-item group relative z-0 w-full cursor-pointer text-left',
-              i === 0 && 'md:col-span-2 md:row-span-2',
-              i === 3 && 'md:col-span-2',
+              'gallery-tile group',
+              i === 0 && 'gallery-tile--hero',
+              i === galleryImages.length - 1 && 'gallery-tile--wide',
             ]}
+            data-index={i}
             data-src={item.src}
-            data-caption={item.caption}
-            aria-label={`Ampliar: ${item.caption}`}
+            data-caption={caption}
+            aria-label={`Ampliar: ${caption}`}
           >
-            <div
-              class:list={[
-                'gallery-item-frame relative overflow-hidden border border-theme',
-                shapeClass[item.shape],
-                i === 0 ? 'aspect-[4/5]' : 'aspect-square',
-              ]}
-            >
-              <img
-                src={item.src}
-                alt={item.alt}
-                class="h-full w-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <span class="gallery-caption mt-2 block text-xs uppercase tracking-wider text-theme-muted transition">
-              {item.caption}
+            <img
+              src={item.src}
+              alt={item.alt}
+              class="gallery-tile__img"
+              loading={i === 0 ? 'eager' : 'lazy'}
+            />
+            <span class="gallery-tile__overlay" aria-hidden="true">
+              <span class="gallery-tile__index">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <span class="gallery-tile__caption">{caption}</span>
             </span>
           </button>
-        ))
+          );
+        })
       }
     </div>
   </div>
@@ -60,17 +57,38 @@ const shapeClass = {
     class="lightbox"
     role="dialog"
     aria-modal="true"
-    aria-label="Imagen ampliada"
+    aria-label="Galería ampliada"
   >
     <button
       type="button"
       id="lightbox-close"
-      class="btn-secondary absolute right-4 top-4 px-4 py-2 text-sm sm:right-6 sm:top-6"
+      class="lightbox-btn lightbox-btn--close btn-secondary px-4 py-2 text-sm"
       aria-label="Cerrar"
     >
       Cerrar
     </button>
-    <figure class="flex w-full flex-col items-center gap-4 px-4">
+
+    <button
+      type="button"
+      id="lightbox-prev"
+      class="lightbox-btn lightbox-btn--prev btn-secondary px-3 py-2 text-sm"
+      aria-label="Anterior"
+    >
+      ←
+    </button>
+
+    <button
+      type="button"
+      id="lightbox-next"
+      class="lightbox-btn lightbox-btn--next btn-secondary px-3 py-2 text-sm"
+      aria-label="Siguiente"
+    >
+      →
+    </button>
+
+    <p id="lightbox-counter" class="lightbox-counter"></p>
+
+    <figure class="lightbox-figure">
       <img id="lightbox-img" src="" alt="" />
       <figcaption id="lightbox-caption" class="text-sm text-accent"></figcaption>
     </figure>
@@ -78,17 +96,39 @@ const shapeClass = {
 </section>
 
 <script>
-  const items = document.querySelectorAll<HTMLButtonElement>('.gallery-item');
+  const tiles = Array.from(
+    document.querySelectorAll<HTMLButtonElement>('.gallery-tile'),
+  );
+  const slides = tiles.map((tile) => ({
+    src: tile.dataset.src ?? '',
+    caption: tile.dataset.caption ?? '',
+  }));
+
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
   const lightboxCaption = document.getElementById('lightbox-caption');
+  const lightboxCounter = document.getElementById('lightbox-counter');
   const closeBtn = document.getElementById('lightbox-close');
+  const prevBtn = document.getElementById('lightbox-prev');
+  const nextBtn = document.getElementById('lightbox-next');
 
-  function openLightbox(src: string, caption: string) {
-    if (!lightbox || !lightboxImg || !lightboxCaption) return;
-    lightboxImg.src = src.startsWith('http') ? src.replace('w=800', 'w=1600') : src;
-    lightboxImg.alt = caption;
-    lightboxCaption.textContent = caption;
+  let currentIndex = 0;
+
+  function showSlide(index: number) {
+    if (!slides.length || !lightboxImg || !lightboxCaption || !lightboxCounter) return;
+
+    currentIndex = (index + slides.length) % slides.length;
+    const slide = slides[currentIndex];
+
+    lightboxImg.src = slide.src;
+    lightboxImg.alt = slide.caption;
+    lightboxCaption.textContent = slide.caption;
+    lightboxCounter.textContent = `${currentIndex + 1} / ${slides.length}`;
+  }
+
+  function openLightbox(index: number) {
+    if (!lightbox) return;
+    showSlide(index);
     lightbox.classList.add('is-open');
     document.body.style.overflow = 'hidden';
   }
@@ -100,18 +140,25 @@ const shapeClass = {
     (document.activeElement as HTMLElement | null)?.blur();
   }
 
-  items.forEach((item) => {
-    item.addEventListener('click', () => {
-      openLightbox(item.dataset.src ?? '', item.dataset.caption ?? '');
-      item.blur();
+  tiles.forEach((tile) => {
+    tile.addEventListener('click', () => {
+      openLightbox(Number(tile.dataset.index ?? 0));
+      tile.blur();
     });
   });
 
   closeBtn?.addEventListener('click', closeLightbox);
+  prevBtn?.addEventListener('click', () => showSlide(currentIndex - 1));
+  nextBtn?.addEventListener('click', () => showSlide(currentIndex + 1));
+
   lightbox?.addEventListener('click', (e) => {
     if (e.target === lightbox) closeLightbox();
   });
+
   document.addEventListener('keydown', (e) => {
+    if (!lightbox?.classList.contains('is-open')) return;
     if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') showSlide(currentIndex - 1);
+    if (e.key === 'ArrowRight') showSlide(currentIndex + 1);
   });
 </script>

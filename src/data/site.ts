@@ -41,40 +41,64 @@ export const aboutText = {
 
 export const galleryImages = [
   {
-    src: '/images/gallery/galeria1.png',
+    src: '/images/gallery/galeria1.jpg',
     alt: 'En otro sentido — galería 1',
     caption: 'Galería 1',
-    shape: 'arch' as const,
   },
   {
     src: '/images/gallery/galeria2.png',
     alt: 'En otro sentido — galería 2',
     caption: 'Galería 2',
-    shape: 'circle' as const,
   },
   {
     src: '/images/gallery/galeria3.png',
     alt: 'En otro sentido — galería 3',
     caption: 'Galería 3',
-    shape: 'slant' as const,
   },
   {
     src: '/images/gallery/galeria4.png',
     alt: 'En otro sentido — galería 4',
     caption: 'Galería 4',
-    shape: 'arch' as const,
   },
   {
     src: '/images/gallery/galeria5.png',
     alt: 'En otro sentido — galería 5',
     caption: 'Galería 5',
-    shape: 'circle' as const,
   },
   {
     src: '/images/gallery/galeria7.jpg',
     alt: 'En otro sentido — galería 7',
     caption: 'Galería 7',
-    shape: 'slant' as const,
+  },
+  {
+    src: '/images/gallery/galeria8.jpg',
+    alt: 'En otro sentido — galería 8',
+    caption: 'Galería 8',
+  },
+  {
+    src: '/images/gallery/galeria9.jpg',
+    alt: 'En otro sentido — galería 9',
+    caption: 'Galería 9',
+  },
+  {
+    src: '/images/gallery/galeria10.png',
+    alt: 'En otro sentido — galería 10',
+    caption: 'Galería 10',
+  },
+  {
+    src: '/images/gallery/galeria11.jpg',
+    alt: 'En otro sentido — galería 11',
+    caption: 'Galería 11',
+  },
+  {
+    src: '/images/gallery/galeria13.png',
+    alt: 'En otro sentido — galería 13',
+    caption: 'Galería 13',
+  },
+  {
+    src: '/images/gallery/galeria12.jpg',
+    alt: 'En otro sentido — galería 12',
+    caption: 'Galería 12',
   },
 ];
 
