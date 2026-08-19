@@ -11,7 +11,7 @@ export const site = {
     instagram: 'https://www.instagram.com/enotrosentido_/',
     linktree: 'https://linktr.ee/eosnetacosmica',
     spotify: 'https://open.spotify.com/intl-es/album/27PHU7vkDNYlOOuBzrtFbm',
-    youtube: 'https://www.youtube.com/@eosnetacosmica',
+    youtube: 'https://www.youtube.com/@EnOtroSentido',
     tiktok: 'https://www.tiktok.com/@en.otro.sentido',
   },
   spotify: {
