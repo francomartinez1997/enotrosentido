@@ -20,8 +20,6 @@ export const site = {
   },
   youtube: {
     enVivo: 'Dqpims4Bm0g',
-    enVivoUrl:
-      'https://www.youtube.com/watch?v=Dqpims4Bm0g&list=RDDqpims4Bm0g&start_radio=1',
   },
   nav: [
     { label: 'Nosotros', href: '#nosotros' },
