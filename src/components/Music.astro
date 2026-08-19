@@ -23,27 +23,27 @@ import { site } from '../data/site';
       </a>
     </div>
 
-    <div class="grid gap-6 lg:grid-cols-2">
-      <div class="overflow-hidden border border-theme">
+    <div class="grid gap-6 lg:grid-cols-2 lg:items-start">
+      <div class="flex flex-col overflow-hidden border border-theme">
         <p class="border-b border-theme px-4 py-3 text-sm text-theme-muted">
-          Destacado · En tus ojos
+          Destacado · Cuánto más
         </p>
         <iframe
-          class="block w-full max-w-full"
+          class="spotify-embed block w-full max-w-full"
           style="border: 0;"
           src={`https://open.spotify.com/embed/track/${site.spotify.featuredTrack}?utm_source=generator&theme=0`}
           height="352"
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
           loading="lazy"
-          title="Spotify — En tus ojos"></iframe>
+          title="Spotify — Cuánto más"></iframe>
       </div>
 
-      <div class="overflow-hidden border border-theme">
+      <div class="flex flex-col overflow-hidden border border-theme">
         <p class="border-b border-theme px-4 py-3 text-sm text-theme-muted">
           Álbum · La espera (2024)
         </p>
         <iframe
-          class="block w-full max-w-full"
+          class="spotify-embed block w-full max-w-full"
           style="border: 0;"
           src={`https://open.spotify.com/embed/album/${site.spotify.album}?utm_source=generator&theme=0`}
           height="352"
@@ -54,3 +54,21 @@ import { site } from '../data/site';
     </div>
   </div>
 </section>
+
+<script is:inline>
+  (function () {
+    var desktop = window.matchMedia('(min-width: 1024px)');
+
+    function syncSpotifyHeights() {
+      var height = desktop.matches ? 352 : 152;
+
+      document.querySelectorAll('.spotify-embed').forEach(function (iframe) {
+        iframe.setAttribute('height', String(height));
+        iframe.style.height = height + 'px';
+      });
+    }
+
+    syncSpotifyHeights();
+    desktop.addEventListener('change', syncSpotifyHeights);
+  })();
+</script>

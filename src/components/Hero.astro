@@ -4,9 +4,9 @@ import { site, heroImage } from '../data/site';
 
 <section class="pt-28 pb-16 md:pt-32 md:pb-24">
   <div
-    class="mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-14"
+    class="mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 md:max-w-2xl md:gap-12 lg:max-w-6xl lg:grid-cols-2 lg:gap-14"
   >
-    <div class="relative order-2 lg:order-1">
+    <div class="relative order-2 md:order-1 md:mx-auto md:w-full md:max-w-md lg:order-1 lg:mx-0 lg:max-w-none">
       <div class="shape-arch relative aspect-[4/5] max-h-[70vh] overflow-hidden border border-theme">
         <img
           src={heroImage}
@@ -27,20 +27,20 @@ import { site, heroImage } from '../data/site';
       </a>
     </div>
 
-    <div class="order-1 flex flex-col gap-5 lg:order-2 lg:py-8">
+    <div class="order-1 flex flex-col gap-5 md:order-2 md:items-center md:text-center lg:order-2 lg:items-start lg:text-left lg:py-8">
       <p class="section-label">{site.tagline}</p>
 
-      <h1 class="hero-title text-[clamp(2.75rem,10vw,5.5rem)]">
+      <h1 class="hero-title text-[clamp(2.75rem,10vw,5.5rem)] md:text-[clamp(2.5rem,9vw,4.25rem)] lg:text-[clamp(2.75rem,5vw,5.5rem)]">
         <span class="block text-theme">En otro</span>
         <span class="block text-accent">sentido</span>
       </h1>
 
-      <p class="max-w-md text-base leading-relaxed text-theme-muted sm:text-lg">
+      <p class="max-w-md text-base leading-relaxed text-theme-muted sm:text-lg md:mx-auto lg:mx-0">
         Rock moderno desde Córdoba, Argentina. Primer disco <em>La espera</em> — un viaje
         sonoro entre amistad, romance y el presente.
       </p>
 
-      <div class="flex flex-wrap gap-3 pt-1">
+      <div class="flex flex-wrap gap-3 pt-1 md:justify-center lg:justify-start">
         <a href="#musica" class="btn-primary rounded-full px-6 py-3 text-sm font-semibold">
           Escuchar ahora
         </a>

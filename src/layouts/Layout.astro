@@ -30,24 +30,12 @@ const {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta id="color-scheme-meta" name="color-scheme" content="dark" />
-    <meta id="theme-color-meta" name="theme-color" content="#0a0a0a" />
     <title>{title}</title>
     <script is:inline>
       (function () {
         var t = localStorage.getItem('theme');
         if (t !== 'light' && t !== 'dark') t = 'dark';
-        var root = document.documentElement;
-        root.setAttribute('data-theme', t);
-        root.style.colorScheme = t === 'light' ? 'only light' : 'dark';
-        var schemeMeta = document.getElementById('color-scheme-meta');
-        if (schemeMeta) {
-          schemeMeta.setAttribute('content', t === 'light' ? 'only light' : 'dark');
-        }
-        var themeMeta = document.getElementById('theme-color-meta');
-        if (themeMeta) {
-          themeMeta.setAttribute('content', t === 'light' ? '#e4e4e7' : '#0a0a0a');
-        }
+        document.documentElement.setAttribute('data-theme', t);
       })();
     </script>
   </head>
