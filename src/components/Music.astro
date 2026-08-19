@@ -1,0 +1,56 @@
+---
+import { site } from '../data/site';
+---
+
+<section id="musica" class="scroll-mt-24 py-16 md:py-24">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <div
+      class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
+    >
+      <div>
+        <p class="section-label mb-3">Escuchá</p>
+        <h2 class="display-title text-4xl text-theme sm:text-5xl md:text-6xl">
+          Música
+        </h2>
+      </div>
+      <a
+        href={site.social.spotify}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-sm text-accent transition hover:text-theme"
+      >
+        Abrir en Spotify →
+      </a>
+    </div>
+
+    <div class="grid gap-6 lg:grid-cols-2">
+      <div class="overflow-hidden border border-theme">
+        <p class="border-b border-theme px-4 py-3 text-sm text-theme-muted">
+          Destacado · En tus ojos
+        </p>
+        <iframe
+          class="block w-full max-w-full"
+          style="border: 0;"
+          src={`https://open.spotify.com/embed/track/${site.spotify.featuredTrack}?utm_source=generator&theme=0`}
+          height="352"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"
+          title="Spotify — En tus ojos"></iframe>
+      </div>
+
+      <div class="overflow-hidden border border-theme">
+        <p class="border-b border-theme px-4 py-3 text-sm text-theme-muted">
+          Álbum · La espera (2024)
+        </p>
+        <iframe
+          class="block w-full max-w-full"
+          style="border: 0;"
+          src={`https://open.spotify.com/embed/album/${site.spotify.album}?utm_source=generator&theme=0`}
+          height="352"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"
+          title="Spotify — La espera"></iframe>
+      </div>
+    </div>
+  </div>
+</section>

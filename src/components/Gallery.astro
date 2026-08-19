@@ -1,0 +1,117 @@
+---
+import { galleryImages } from '../data/site';
+
+const shapeClass = {
+  arch: 'shape-arch',
+  circle: 'shape-circle aspect-square',
+  slant: 'shape-slant',
+} as const;
+---
+
+<section id="galeria" class="scroll-mt-24 py-16 md:py-24">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <p class="section-label mb-3">Fotos</p>
+    <h2 class="display-title mb-8 text-4xl text-theme sm:text-5xl md:text-6xl">
+      Galería
+    </h2>
+    <p class="mb-8 max-w-lg text-theme-muted">
+      Tocá una imagen para ampliarla.
+    </p>
+
+    <div class="grid grid-cols-2 gap-3 overflow-visible sm:gap-4 md:grid-cols-3 md:gap-8">
+      {
+        galleryImages.map((item, i) => (
+          <button
+            type="button"
+            class:list={[
+              'gallery-item group relative z-0 w-full cursor-pointer text-left',
+              i === 0 && 'md:col-span-2 md:row-span-2',
+              i === 3 && 'md:col-span-2',
+            ]}
+            data-src={item.src}
+            data-caption={item.caption}
+            aria-label={`Ampliar: ${item.caption}`}
+          >
+            <div
+              class:list={[
+                'gallery-item-frame relative overflow-hidden border border-theme',
+                shapeClass[item.shape],
+                i === 0 ? 'aspect-[4/5]' : 'aspect-square',
+              ]}
+            >
+              <img
+                src={item.src}
+                alt={item.alt}
+                class="h-full w-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <span class="gallery-caption mt-2 block text-xs uppercase tracking-wider text-theme-muted transition">
+              {item.caption}
+            </span>
+          </button>
+        ))
+      }
+    </div>
+  </div>
+
+  <div
+    id="lightbox"
+    class="lightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Imagen ampliada"
+  >
+    <button
+      type="button"
+      id="lightbox-close"
+      class="btn-secondary absolute right-4 top-4 px-4 py-2 text-sm sm:right-6 sm:top-6"
+      aria-label="Cerrar"
+    >
+      Cerrar
+    </button>
+    <figure class="flex w-full flex-col items-center gap-4 px-4">
+      <img id="lightbox-img" src="" alt="" />
+      <figcaption id="lightbox-caption" class="text-sm text-accent"></figcaption>
+    </figure>
+  </div>
+</section>
+
+<script>
+  const items = document.querySelectorAll<HTMLButtonElement>('.gallery-item');
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
+  const lightboxCaption = document.getElementById('lightbox-caption');
+  const closeBtn = document.getElementById('lightbox-close');
+
+  function openLightbox(src: string, caption: string) {
+    if (!lightbox || !lightboxImg || !lightboxCaption) return;
+    lightboxImg.src = src.startsWith('http') ? src.replace('w=800', 'w=1600') : src;
+    lightboxImg.alt = caption;
+    lightboxCaption.textContent = caption;
+    lightbox.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    if (!lightbox) return;
+    lightbox.classList.remove('is-open');
+    document.body.style.overflow = '';
+    (document.activeElement as HTMLElement | null)?.blur();
+  }
+
+  items.forEach((item) => {
+    item.addEventListener('click', () => {
+      openLightbox(item.dataset.src ?? '', item.dataset.caption ?? '');
+      item.blur();
+    });
+  });
+
+  closeBtn?.addEventListener('click', closeLightbox);
+  lightbox?.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+</script>
