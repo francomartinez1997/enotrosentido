@@ -1,10 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import ParallaxBackground from '../components/ParallaxBackground.astro';
 import Header from '../components/Header.astro';
+import MobileBar from '../components/MobileBar.astro';
 import Hero from '../components/Hero.astro';
 import About from '../components/About.astro';
+import Marquee from '../components/Marquee.astro';
 import Music from '../components/Music.astro';
+import Singles from '../components/Singles.astro';
+import Proximo from '../components/Proximo.astro';
 import Gallery from '../components/Gallery.astro';
 import Links from '../components/Links.astro';
 import Contact from '../components/Contact.astro';
@@ -12,17 +15,24 @@ import Footer from '../components/Footer.astro';
 ---
 
 <Layout>
-  <ParallaxBackground />
   <Header />
-  <main class="relative z-10">
+  <main class="v2-main">
     <Hero />
     <About />
+    <Marquee />
     <Music />
+    <Singles />
+    <Proximo />
     <Gallery />
     <Links />
     <Contact />
-  </main>
-  <div class="relative z-10">
     <Footer />
-  </div>
+  </main>
+  <MobileBar />
 </Layout>
+
+<style>
+  .v2-main {
+    min-width: 0;
+  }
+</style>

@@ -1,0 +1,65 @@
+---
+const items = ['LA ESPERA', '—', '2024', '—', 'NUEVO MATERIAL EN CURSO', '—', 'CÓRDOBA', '—'];
+---
+
+<div class="marquee">
+  <div class="marquee__track mono">
+    <span class="marquee__set">
+      {items.map((t) => <span>{t}</span>)}
+    </span>
+    <span class="marquee__set" aria-hidden="true">
+      {items.map((t) => <span>{t}</span>)}
+    </span>
+  </div>
+</div>
+
+<style>
+  .marquee {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--acc);
+    color: #fff;
+    overflow: hidden;
+    padding: 11px 0;
+  }
+
+  .marquee__track {
+    display: flex;
+    width: max-content;
+    animation: v2slide 24s linear infinite;
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .marquee__set {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 32px;
+    padding-right: 32px;
+  }
+
+  .marquee__set span {
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 700px) {
+    .marquee__track {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+    }
+
+    .marquee__set {
+      gap: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track {
+      animation: none;
+    }
+  }
+</style>

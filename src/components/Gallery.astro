@@ -1,164 +1,314 @@
 ---
 import { galleryImages } from '../data/site';
+
+const SPANS = [
+  'grid-column:span 3;grid-row:span 2',
+  'grid-column:span 2;grid-row:span 1',
+  'grid-column:span 1;grid-row:span 1',
+  'grid-column:span 2;grid-row:span 2',
+  'grid-column:span 1;grid-row:span 1',
+  'grid-column:span 2;grid-row:span 1',
+  'grid-column:span 2;grid-row:span 2',
+  'grid-column:span 4;grid-row:span 1',
+  'grid-column:span 1;grid-row:span 1',
+  'grid-column:span 3;grid-row:span 2',
+  'grid-column:span 2;grid-row:span 1',
+  'grid-column:span 1;grid-row:span 1',
+];
+
+const CUTS = [
+  'polygon(0 0,100% 0,100% 88%,94% 100%,0 100%)',
+  'none',
+  'polygon(6% 0,100% 0,100% 100%,0 100%)',
+  'none',
+  'polygon(0 0,100% 0,100% 100%,0 88%)',
+  'none',
+  'polygon(0 0,100% 0,100% 82%,90% 100%,0 100%)',
+  'none',
+  'none',
+  'polygon(0 0,94% 0,100% 12%,100% 100%,0 100%)',
+  'none',
+  'none',
+];
+
+const photos = galleryImages.map((p, i) => ({
+  ...p,
+  num: String(i + 1).padStart(2, '0'),
+  span: SPANS[i] ?? '',
+  cut: CUTS[i] ?? 'none',
+}));
 ---
 
-<section id="galeria" class="scroll-mt-24 py-16 md:py-24">
-  <div class="mx-auto max-w-6xl px-4 sm:px-6">
-    <div class="mb-10 flex flex-col gap-4 md:mb-12 md:flex-row md:items-end md:justify-between">
-      <div>
-        <p class="section-label mb-3">Fotos</p>
-        <h2 class="display-title text-4xl text-theme sm:text-5xl md:text-6xl">
-          Galería
-        </h2>
-      </div>
-      <p class="max-w-xs text-sm text-theme-muted md:text-right">
-        Tocá una foto para verla en grande.
-      </p>
+<section id="archivo" data-reveal="1" class="eos-section archivo">
+  <div class="archivo-head">
+    <div class="archivo-head__title">
+      <span class="mono eos-eyebrow">05 / Archivo</span>
+      <h2 class="eos-h2">Fotos</h2>
     </div>
-
-    <div class="gallery-grid">
-      {
-        galleryImages.map((item, i) => {
-          const caption = `eos ${i + 1}`;
-          return (
-          <button
-            type="button"
-            class:list={[
-              'gallery-tile group',
-              i === 0 && 'gallery-tile--hero',
-              i === galleryImages.length - 1 && 'gallery-tile--wide',
-            ]}
-            data-index={i}
-            data-src={item.src}
-            data-caption={caption}
-            aria-label={`Ampliar: ${caption}`}
-          >
-            <img
-              src={item.src}
-              alt={item.alt}
-              class="gallery-tile__img"
-              loading={i === 0 ? 'eager' : 'lazy'}
-            />
-            <span class="gallery-tile__overlay" aria-hidden="true">
-              <span class="gallery-tile__index">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <span class="gallery-tile__caption">{caption}</span>
-            </span>
-          </button>
-          );
-        })
-      }
-    </div>
+    <button type="button" id="eos-duo-toggle" class="mono archivo-duo-toggle">Duotono ON</button>
   </div>
 
-  <div
-    id="lightbox"
-    class="lightbox"
-    role="dialog"
-    aria-modal="true"
-    aria-label="Galería ampliada"
-  >
-    <button
-      type="button"
-      id="lightbox-close"
-      class="lightbox-btn lightbox-btn--close btn-secondary px-4 py-2 text-sm"
-      aria-label="Cerrar"
-    >
-      Cerrar
-    </button>
-
-    <button
-      type="button"
-      id="lightbox-prev"
-      class="lightbox-btn lightbox-btn--prev btn-secondary px-3 py-2 text-sm"
-      aria-label="Anterior"
-    >
-      ←
-    </button>
-
-    <button
-      type="button"
-      id="lightbox-next"
-      class="lightbox-btn lightbox-btn--next btn-secondary px-3 py-2 text-sm"
-      aria-label="Siguiente"
-    >
-      →
-    </button>
-
-    <p id="lightbox-counter" class="lightbox-counter"></p>
-
-    <figure class="lightbox-figure">
-      <img id="lightbox-img" src="" alt="" />
-      <figcaption id="lightbox-caption" class="text-sm text-accent"></figcaption>
-    </figure>
+  <div class="archivo-grid">
+    {
+      photos.map((p, i) => (
+        <button
+          type="button"
+          class="archive-tile"
+          data-index={i}
+          style={`${p.span};clip-path:${p.cut}`}
+          aria-label={`Ampliar ${p.alt}`}
+        >
+          <img src={p.src} alt={p.alt} loading="lazy" class="archive-tile__img" />
+          <span class="archive-tile__duo" data-duo="1" aria-hidden="true" />
+          <span class="mono archive-tile__num">{p.num}</span>
+        </button>
+      ))
+    }
   </div>
 </section>
 
+<div id="eos-lightbox" class="eos-lightbox" role="dialog" aria-modal="true" aria-label="Galería ampliada">
+  <div class="eos-lightbox__bar mono">
+    <span id="eos-lightbox-count"></span>
+    <button type="button" id="eos-lightbox-close" class="eos-lightbox__close">Cerrar ✕</button>
+  </div>
+  <img id="eos-lightbox-img" alt="En otro sentido" class="eos-lightbox__img" />
+  <button type="button" id="eos-lightbox-prev" class="eos-lightbox__nav eos-lightbox__nav--prev" aria-label="Anterior">←</button>
+  <button type="button" id="eos-lightbox-next" class="eos-lightbox__nav eos-lightbox__nav--next" aria-label="Siguiente">→</button>
+</div>
+
 <script>
-  const tiles = Array.from(
-    document.querySelectorAll<HTMLButtonElement>('.gallery-tile'),
-  );
-  const slides = tiles.map((tile) => ({
-    src: tile.dataset.src ?? '',
-    caption: tile.dataset.caption ?? '',
-  }));
+  // ---- Toggle duotono (afecta la grilla de fotos) ----
+  const duoToggle = document.getElementById('eos-duo-toggle');
+  const archiveSection = document.getElementById('archivo');
 
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
-  const lightboxCaption = document.getElementById('lightbox-caption');
-  const lightboxCounter = document.getElementById('lightbox-counter');
-  const closeBtn = document.getElementById('lightbox-close');
-  const prevBtn = document.getElementById('lightbox-prev');
-  const nextBtn = document.getElementById('lightbox-next');
+  duoToggle?.addEventListener('click', () => {
+    const isOff = archiveSection?.classList.toggle('is-duo-off');
+    if (duoToggle) duoToggle.textContent = isOff ? 'Duotono OFF' : 'Duotono ON';
+  });
 
-  let currentIndex = 0;
+  // ---- Lightbox ----
+  const tiles = Array.from(document.querySelectorAll<HTMLButtonElement>('.archive-tile'));
+  const slides = tiles.map((tile) => {
+    const img = tile.querySelector('img');
+    return { src: img?.getAttribute('src') ?? '', alt: img?.getAttribute('alt') ?? '' };
+  });
 
-  function showSlide(index: number) {
-    if (!slides.length || !lightboxImg || !lightboxCaption || !lightboxCounter) return;
+  const lightbox = document.getElementById('eos-lightbox');
+  const lbImg = document.getElementById('eos-lightbox-img') as HTMLImageElement | null;
+  const lbCount = document.getElementById('eos-lightbox-count');
+  const closeBtn = document.getElementById('eos-lightbox-close');
+  const prevBtn = document.getElementById('eos-lightbox-prev');
+  const nextBtn = document.getElementById('eos-lightbox-next');
 
-    currentIndex = (index + slides.length) % slides.length;
-    const slide = slides[currentIndex];
+  let current = 0;
 
-    lightboxImg.src = slide.src;
-    lightboxImg.alt = slide.caption;
-    lightboxCaption.textContent = slide.caption;
-    lightboxCounter.textContent = `${currentIndex + 1} / ${slides.length}`;
+  function show(index: number) {
+    if (!slides.length || !lbImg || !lbCount) return;
+    current = (index + slides.length) % slides.length;
+    const slide = slides[current];
+    lbImg.src = slide.src;
+    lbImg.alt = slide.alt;
+    lbCount.textContent = `${String(current + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
   }
 
-  function openLightbox(index: number) {
+  function open(index: number) {
     if (!lightbox) return;
-    showSlide(index);
+    show(index);
     lightbox.classList.add('is-open');
     document.body.style.overflow = 'hidden';
   }
 
-  function closeLightbox() {
+  function close() {
     if (!lightbox) return;
     lightbox.classList.remove('is-open');
     document.body.style.overflow = '';
-    (document.activeElement as HTMLElement | null)?.blur();
   }
 
   tiles.forEach((tile) => {
-    tile.addEventListener('click', () => {
-      openLightbox(Number(tile.dataset.index ?? 0));
-      tile.blur();
-    });
+    tile.addEventListener('click', () => open(Number(tile.dataset.index ?? 0)));
   });
 
-  closeBtn?.addEventListener('click', closeLightbox);
-  prevBtn?.addEventListener('click', () => showSlide(currentIndex - 1));
-  nextBtn?.addEventListener('click', () => showSlide(currentIndex + 1));
+  closeBtn?.addEventListener('click', close);
+  prevBtn?.addEventListener('click', () => show(current - 1));
+  nextBtn?.addEventListener('click', () => show(current + 1));
 
   lightbox?.addEventListener('click', (e) => {
-    if (e.target === lightbox) closeLightbox();
+    if (e.target === lightbox) close();
   });
 
   document.addEventListener('keydown', (e) => {
     if (!lightbox?.classList.contains('is-open')) return;
-    if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowLeft') showSlide(currentIndex - 1);
-    if (e.key === 'ArrowRight') showSlide(currentIndex + 1);
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') show(current - 1);
+    if (e.key === 'ArrowRight') show(current + 1);
   });
 </script>
+
+<style>
+  .archivo {
+    display: grid;
+    gap: 34px;
+  }
+
+  .archivo-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .archivo-head__title {
+    display: grid;
+    gap: 14px;
+  }
+
+  .archivo-duo-toggle {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--fg);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 11px 16px;
+    clip-path: polygon(0 0, 100% 0, 100% 62%, 92% 100%, 0 100%);
+  }
+
+  .archivo-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 150px;
+    gap: 6px;
+  }
+
+  @media (max-width: 700px) {
+    .archivo-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .archive-tile {
+      grid-column: span 1 !important;
+      grid-row: span 1 !important;
+      clip-path: none !important;
+    }
+  }
+
+  .archive-tile {
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+    border: 0;
+    background: #000;
+    display: block;
+  }
+
+  .archive-tile__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(1) contrast(1.35) brightness(1.05);
+    transition:
+      transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1),
+      filter 0.4s ease;
+  }
+
+  .archive-tile:hover .archive-tile__img {
+    transform: scale(1.06);
+    filter: none;
+  }
+
+  .archive-tile__duo {
+    position: absolute;
+    inset: 0;
+    background: var(--duo);
+    mix-blend-mode: multiply;
+    opacity: 1;
+    pointer-events: none;
+    transition: opacity 0.4s;
+  }
+
+  .archive-tile:hover .archive-tile__duo {
+    opacity: 0;
+  }
+
+  #archivo.is-duo-off .archive-tile__img {
+    filter: none;
+  }
+
+  #archivo.is-duo-off .archive-tile__duo {
+    opacity: 0;
+  }
+
+  .archive-tile__num {
+    position: absolute;
+    left: 9px;
+    top: 9px;
+    font-size: 10px;
+    color: #fff;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+  }
+
+  .eos-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(5, 5, 6, 0.97);
+    display: none;
+    place-items: center;
+    padding: 64px 26px;
+  }
+
+  .eos-lightbox.is-open {
+    display: grid;
+  }
+
+  .eos-lightbox__img {
+    max-width: min(1150px, 92vw);
+    max-height: 82vh;
+    object-fit: contain;
+  }
+
+  .eos-lightbox__bar {
+    position: absolute;
+    top: 22px;
+    left: 28px;
+    right: 28px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  .eos-lightbox__close {
+    background: transparent;
+    border: 0;
+    color: var(--dim);
+    font-family: inherit;
+    font-size: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+  }
+
+  .eos-lightbox__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--fg);
+    width: 48px;
+    height: 48px;
+    font-size: 16px;
+  }
+
+  .eos-lightbox__nav--prev {
+    left: 20px;
+  }
+
+  .eos-lightbox__nav--next {
+    right: 20px;
+  }
+</style>

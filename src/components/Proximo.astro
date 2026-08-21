@@ -1,0 +1,410 @@
+---
+const bands = [
+  { anim: 'lkA', dur: '13.0s', x: '-19vw', clip: '0 0 86% 0', color: '#d20a1e', pos: 'relative', glow: true },
+  { anim: 'lkB', dur: '13.7s', x: '30vw', clip: '14% 0 72% 0', color: '#d20a1e' },
+  { anim: 'lkC', dur: '14.4s', x: '-40vw', clip: '28% 0 58% 0', color: '#d20a1e' },
+  { anim: 'lkD', dur: '15.1s', x: '16vw', clip: '42% 0 44% 0', color: '#d20a1e' },
+  { anim: 'lkE', dur: '15.8s', x: '-27vw', clip: '56% 0 30% 0', color: '#8a0512' },
+  { anim: 'lkF', dur: '16.5s', x: '36vw', clip: '70% 0 16% 0', color: '#d20a1e' },
+  { anim: 'lkG', dur: '17.2s', x: '-14vw', clip: '84% 0 0 0', color: '#d20a1e', opacity: '.75' },
+];
+---
+
+<section id="proximo" data-reveal="1" data-tease="1" aria-label="Próximo lanzamiento" class="proximo">
+  <span class="proximo-glow" id="eos-tease-glow" aria-hidden="true"></span>
+  <span class="proximo-scan" aria-hidden="true"></span>
+
+  <div class="proximo-head">
+    <span class="mono proximo-eyebrow">04 / ¿?</span>
+    <span class="mono proximo-cap">Señal intermitente</span>
+  </div>
+
+  <h2 class="proximo-h2">PRÓXIMAMENTE</h2>
+
+  <div class="proximo-word-wrap">
+    <span class="proximo-word">
+      {
+        bands.map((b) => (
+          <span
+            class="proximo-band"
+            data-text="INSTINTO"
+            style={`position:${b.pos ?? 'absolute'};left:0;top:0;transform:translateX(${b.x});animation:${b.anim} ${b.dur} cubic-bezier(.5,0,.5,1) infinite;color:${b.color};clip-path:inset(${b.clip});${b.blend ? `mix-blend-mode:${b.blend};` : ''}${b.opacity ? `opacity:${b.opacity};` : ''}${b.glow ? 'text-shadow:0 0 60px rgba(210,10,30,0.4);' : ''}`}
+          />
+        ))
+      }
+      <span class="proximo-word-scan" aria-hidden="true"></span>
+    </span>
+    <span class="mono proximo-meta">
+      <span>Segundo disco</span>
+      <span class="proximo-meta__dot">◆</span>
+      <span>X canciones · sin fecha</span>
+    </span>
+  </div>
+
+  <div class="proximo-grid">
+    <p class="proximo-p">Lo que viene está grabado con el ruido propio del presente. Más distorsion, menos vueltas, la espontaneidad de siempre.</p>
+    <p class="proximo-p proximo-p--dim">No hay fecha de lanzamiento. Conectate y enterate de todo lo que viene.</p>
+    <a href="https://www.instagram.com/enotrosentido_/" target="_blank" rel="noopener noreferrer" class="mono proximo-cta">
+      Seguir la pista ↗
+    </a>
+  </div>
+</section>
+
+<script>
+  const sec = document.querySelector('[data-tease]');
+  const glow = document.getElementById('eos-tease-glow');
+
+  function at(x: number, y: number) {
+    if (!sec || !glow) return;
+    const r = sec.getBoundingClientRect();
+    glow.style.opacity = '1';
+    glow.style.transform = `translate(${x - r.left}px,${y - r.top}px)`;
+  }
+
+  sec?.addEventListener('pointermove', (e) => at((e as PointerEvent).clientX, (e as PointerEvent).clientY), { passive: true });
+  sec?.addEventListener('pointerleave', () => {
+    if (glow) glow.style.opacity = '0';
+  });
+  sec?.addEventListener(
+    'touchmove',
+    (e) => {
+      const t = (e as TouchEvent).touches[0];
+      if (t) at(t.clientX, t.clientY);
+    },
+    { passive: true },
+  );
+</script>
+
+<style>
+  .proximo {
+    position: relative;
+    border-top: 1px solid var(--line);
+    background: #050506;
+    overflow: hidden;
+    padding: 120px 40px 130px;
+    display: grid;
+    gap: 40px;
+  }
+
+  .proximo-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 760px;
+    height: 760px;
+    margin: -380px 0 0 -380px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(210, 10, 30, 0.55) 0%, rgba(210, 10, 30, 0.16) 42%, transparent 70%);
+    pointer-events: none;
+    transform: translate(-999px, -999px);
+    transition: opacity 0.4s;
+    opacity: 0;
+  }
+
+  .proximo-scan {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    background-image: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0px, rgba(0, 0, 0, 0.6) 2px, transparent 2px, transparent 5px);
+  }
+
+  .proximo-head {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 18px;
+  }
+
+  .proximo-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: #d20a1e;
+  }
+
+  .proximo-cap {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(233, 230, 224, 0.45);
+  }
+
+  .proximo-h2 {
+    position: relative;
+    z-index: 2;
+    margin: 0;
+    font-size: clamp(38px, 5.6vw, 96px);
+    line-height: 0.86;
+    font-weight: 900;
+    font-stretch: 112%;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: #e9e6e0;
+    overflow-wrap: anywhere;
+  }
+
+  .proximo-word-wrap {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    gap: 8px;
+    justify-items: start;
+  }
+
+  .proximo-word {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    clip-path: inset(0 0 20% 0);
+  }
+
+  .proximo-band {
+    user-select: none;
+    -webkit-user-select: none;
+    display: block;
+    font-size: clamp(56px, 13vw, 210px);
+    line-height: 0.86;
+    font-weight: 900;
+    font-stretch: 118%;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    will-change: transform;
+  }
+
+  .proximo-band::before {
+    content: attr(data-text);
+    display: block;
+  }
+
+  .proximo-word-scan {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(0deg, rgba(5, 5, 6, 0.85) 0px, rgba(5, 5, 6, 0.85) 3px, transparent 3px, transparent 13px);
+  }
+
+  .proximo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(233, 230, 224, 0.5);
+  }
+
+  .proximo-meta__dot {
+    color: #d20a1e;
+  }
+
+  .proximo-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 26px;
+    max-width: 1000px;
+    border-top: 1px solid rgba(233, 230, 224, 0.14);
+    padding-top: 30px;
+  }
+
+  @media (max-width: 700px) {
+    .proximo {
+      padding: 90px 20px 100px;
+    }
+    .proximo-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .proximo-p {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.55;
+    color: rgba(233, 230, 224, 0.82);
+  }
+
+  .proximo-p--dim {
+    color: rgba(233, 230, 224, 0.55);
+  }
+
+  .proximo-cta {
+    align-self: start;
+    justify-self: start;
+    border: 1px solid rgba(233, 230, 224, 0.3);
+    color: #e9e6e0;
+    padding: 15px 22px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    clip-path: polygon(0 0, 100% 0, 100% 64%, 94% 100%, 0 100%);
+    transition:
+      background 0.2s,
+      color 0.2s;
+  }
+
+  .proximo-cta:hover {
+    background: #d20a1e;
+    border-color: #d20a1e;
+    color: #fff;
+  }
+
+  @keyframes lkA {
+    0%,
+    100% {
+      transform: translateX(-19vw);
+    }
+    24% {
+      transform: translateX(-13.7vw);
+    }
+    48% {
+      transform: translateX(-5.3vw);
+    }
+    58% {
+      transform: translateX(-2.4vw);
+    }
+    66% {
+      transform: translateX(-1vw);
+    }
+    78% {
+      transform: translateX(-8.6vw);
+    }
+  }
+
+  @keyframes lkB {
+    0%,
+    100% {
+      transform: translateX(30vw);
+    }
+    24% {
+      transform: translateX(21.6vw);
+    }
+    48% {
+      transform: translateX(8.4vw);
+    }
+    59% {
+      transform: translateX(1.8vw);
+    }
+    67% {
+      transform: translateX(0.7vw);
+    }
+    78% {
+      transform: translateX(13.5vw);
+    }
+  }
+
+  @keyframes lkC {
+    0%,
+    100% {
+      transform: translateX(-40vw);
+    }
+    24% {
+      transform: translateX(-28.8vw);
+    }
+    48% {
+      transform: translateX(-11.2vw);
+    }
+    60% {
+      transform: translateX(-3.2vw);
+    }
+    68% {
+      transform: translateX(-1.3vw);
+    }
+    78% {
+      transform: translateX(-18vw);
+    }
+  }
+
+  @keyframes lkD {
+    0%,
+    100% {
+      transform: translateX(16vw);
+    }
+    24% {
+      transform: translateX(11.5vw);
+    }
+    48% {
+      transform: translateX(4.5vw);
+    }
+    61% {
+      transform: translateX(1.1vw);
+    }
+    69% {
+      transform: translateX(0.4vw);
+    }
+    78% {
+      transform: translateX(7.2vw);
+    }
+  }
+
+  @keyframes lkE {
+    0%,
+    100% {
+      transform: translateX(-27vw);
+    }
+    24% {
+      transform: translateX(-19.4vw);
+    }
+    48% {
+      transform: translateX(-7.6vw);
+    }
+    62% {
+      transform: translateX(-2vw);
+    }
+    70% {
+      transform: translateX(-0.8vw);
+    }
+    78% {
+      transform: translateX(-12.2vw);
+    }
+  }
+
+  @keyframes lkF {
+    0%,
+    100% {
+      transform: translateX(36vw);
+    }
+    24% {
+      transform: translateX(25.9vw);
+    }
+    48% {
+      transform: translateX(10.1vw);
+    }
+    63% {
+      transform: translateX(2.6vw);
+    }
+    71% {
+      transform: translateX(1vw);
+    }
+    78% {
+      transform: translateX(16.2vw);
+    }
+  }
+
+  @keyframes lkG {
+    0%,
+    100% {
+      transform: translateX(-14vw);
+    }
+    24% {
+      transform: translateX(-10.1vw);
+    }
+    48% {
+      transform: translateX(-3.9vw);
+    }
+    64% {
+      transform: translateX(-1.4vw);
+    }
+    72% {
+      transform: translateX(-0.6vw);
+    }
+    78% {
+      transform: translateX(-6.3vw);
+    }
+  }
+</style>

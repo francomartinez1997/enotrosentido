@@ -1,90 +1,320 @@
 ---
-import { site } from '../data/site';
+import { site, releases } from '../data/site';
 ---
 
-<section id="musica" class="scroll-mt-24 py-16 md:py-24">
-  <div class="mx-auto max-w-6xl px-4 sm:px-6">
-    <div
-      class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
-    >
-      <div>
-        <p class="section-label mb-3">Escuchá</p>
-        <h2 class="display-title text-4xl text-theme sm:text-5xl md:text-6xl">
-          Música
-        </h2>
-      </div>
-      <a
-        href={site.social.spotify}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-sm text-accent transition hover:text-theme"
-      >
-        Abrir en Spotify →
-      </a>
+<section id="disco" data-reveal="1" class="eos-section disco">
+  <div class="disco-head">
+    <div class="disco-head__title">
+      <span class="mono eos-eyebrow">02 / Disco</span>
+      <h2 class="eos-h2 disco-h2">La espera</h2>
     </div>
+    <a href={site.social.spotify} target="_blank" rel="noopener noreferrer" class="mono disco-spotify-link">
+      Spotify ↗
+    </a>
+  </div>
 
-    <div class="grid gap-6 lg:grid-cols-2 lg:items-start">
-      <div class="overflow-hidden border border-theme">
-        <p class="border-b border-theme px-4 py-3 text-sm text-theme-muted">
-          Destacado · Cuánto más
-        </p>
+  <div class="disco-grid">
+    <div class="disco-embeds">
+      <span class="mono disco-embeds__label">Destacado · Cuánto más</span>
+      <div class="disco-embeds__frame-wrap disco-embeds__frame-wrap--track">
         <iframe
-          class="spotify-embed block w-full max-w-full"
-          style="border: 0;"
+          class="disco-embeds__frame"
           src={`https://open.spotify.com/embed/track/${site.spotify.featuredTrack}?utm_source=generator&theme=0`}
-          height="352"
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          width="100%"
+          height="152"
+          frameborder="0"
           loading="lazy"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
           title="Spotify — Cuánto más"></iframe>
       </div>
 
-      <div class="overflow-hidden border border-theme">
-        <p class="border-b border-theme px-4 py-3 text-sm text-theme-muted">
-          Álbum · La espera (2024)
-        </p>
+      <span class="mono disco-embeds__label" style="margin-top:8px;">Álbum completo</span>
+      <div class="disco-embeds__frame-wrap">
         <iframe
-          class="spotify-embed block w-full max-w-full"
-          style="border: 0;"
+          class="disco-embeds__frame"
           src={`https://open.spotify.com/embed/album/${site.spotify.album}?utm_source=generator&theme=0`}
+          width="100%"
           height="352"
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          frameborder="0"
           loading="lazy"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
           title="Spotify — La espera"></iframe>
       </div>
     </div>
 
-    <div class="mt-10 md:mt-12">
-      <div class="mb-4">
-        <p class="text-sm text-theme-muted">En vivo · En tus ojos · Pez Volcán 2024</p>
+    <div class="disco-releases">
+      {
+        releases.map((rel) => (
+          <a href={rel.href} target="_blank" rel="noopener noreferrer" class="disco-release">
+            <span class="mono disco-release__num">{rel.num}</span>
+            <span class="disco-release__info">
+              <span class="disco-release__title">{rel.title}</span>
+              <span class="mono disco-release__meta">{rel.meta}</span>
+            </span>
+            <span class="mono disco-release__arrow">↗</span>
+          </a>
+        ))
+      }
+      <div class="disco-studio">
+        <span class="mono eos-eyebrow">En estudio</span>
+        <p class="disco-studio__text">
+          <span class="disco-studio__mark"
+            >Segundo disco en grabación. Más instinto, menos paciencia.</span
+          >
+        </p>
       </div>
-      <div class="overflow-hidden border border-theme">
+    </div>
+  </div>
+
+  <div class="disco-videos">
+    <div class="disco-video">
+      <div class="disco-video__frame">
         <iframe
-          class="youtube-embed aspect-video w-full"
           src={`https://www.youtube.com/embed/${site.youtube.enVivo}`}
-          title="YouTube — En tus ojos en vivo"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-          loading="lazy"></iframe>
+          title="En tus ojos · En vivo"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
       </div>
+      <span class="mono disco-video__caption">En tus ojos · Pez Volcán 2024</span>
+    </div>
+    <div class="disco-video">
+      <div class="disco-video__frame">
+        <iframe
+          src={`https://www.youtube.com/embed/${site.youtube.cuantoMas}`}
+          title="La espera · Full álbum"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+      <span class="mono disco-video__caption">Cuánto más · video oficial</span>
     </div>
   </div>
 </section>
 
-<script is:inline>
-  (function () {
-    var desktop = window.matchMedia('(min-width: 1024px)');
+<style>
+  .disco {
+    display: grid;
+    gap: 44px;
+  }
 
-    function syncSpotifyHeights() {
-      var height = desktop.matches ? 352 : 152;
+  .disco-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+  }
 
-      document.querySelectorAll('.spotify-embed').forEach(function (iframe) {
-        iframe.setAttribute('height', String(height));
-        iframe.style.height = height + 'px';
-      });
+  .disco-head__title {
+    display: grid;
+    gap: 14px;
+  }
+
+  .disco-h2 {
+    font-size: clamp(40px, 8vw, 132px);
+    line-height: 0.84;
+    font-stretch: 118%;
+    letter-spacing: -0.04em;
+  }
+
+  .disco-spotify-link {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--acc);
+    padding-bottom: 6px;
+  }
+
+  .disco-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 2px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    min-width: 0;
+  }
+
+  .disco-embeds {
+    background: var(--bg2);
+    padding: 26px;
+    display: grid;
+    gap: 16px;
+    align-content: start;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .disco-embeds__label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  .disco-embeds__frame-wrap {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .disco-embeds__frame {
+    border: 0;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  @media (max-width: 767px) {
+    .disco-embeds {
+      padding: 16px;
     }
 
-    syncSpotifyHeights();
-    desktop.addEventListener('change', syncSpotifyHeights);
-  })();
-</script>
+    .disco-embeds__frame-wrap--track {
+      container-type: inline-size;
+      height: calc(152px * min(1, 100cqw / 300px));
+    }
+
+    .disco-embeds__frame-wrap--track .disco-embeds__frame {
+      width: 300px;
+      max-width: none;
+      transform: scale(min(1, calc(100cqw / 300px)));
+      transform-origin: top left;
+    }
+  }
+
+  .disco-releases {
+    background: var(--bg2);
+    display: grid;
+    align-content: start;
+  }
+
+  .disco-release {
+    display: grid;
+    grid-template-columns: 40px 1fr auto;
+    gap: 16px;
+    align-items: center;
+    padding: 26px;
+    border-bottom: 1px solid var(--line);
+    transition: background 0.2s;
+  }
+
+  .disco-release:hover {
+    background: var(--acc);
+    color: #fff;
+  }
+
+  .disco-release__num {
+    font-size: 11px;
+    color: var(--acc);
+  }
+
+  .disco-release:hover .disco-release__num {
+    color: #fff;
+  }
+
+  .disco-release__info {
+    display: grid;
+    gap: 6px;
+  }
+
+  .disco-release__title {
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+  }
+
+  .disco-release__meta {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0.62;
+  }
+
+  .disco-release__arrow {
+    font-size: 12px;
+  }
+
+  .disco-studio {
+    padding: 26px;
+    display: grid;
+    gap: 12px;
+  }
+
+  .disco-studio__text {
+    margin: 0;
+    max-width: 380px;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.65;
+  }
+
+  .disco-studio__mark {
+    background: var(--acc);
+    color: #fff;
+    padding: 0.18em 0.42em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  html[data-theme='sangre'] .disco-studio__mark {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  .disco-videos {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 34px;
+    width: 100%;
+  }
+
+  .disco-video {
+    display: grid;
+    gap: 10px;
+    width: 100%;
+    justify-self: center;
+  }
+
+  @media (min-width: 768px) {
+    .disco-video {
+      width: 75%;
+    }
+
+    .disco-video:first-child {
+      justify-self: start;
+    }
+
+    .disco-video:nth-child(2) {
+      justify-self: end;
+    }
+
+    .disco-video:first-child .disco-video__caption {
+      text-align: left;
+    }
+
+    .disco-video:nth-child(2) .disco-video__caption {
+      text-align: right;
+    }
+  }
+
+  .disco-video__frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: #000;
+  }
+
+  .disco-video__frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .disco-video__caption {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+</style>

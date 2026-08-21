@@ -7,18 +7,21 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const galleryDir = path.join(__dirname, '../public/images/gallery');
 
 const MAX_WIDTH = 1920;
+const TAPA_MAX_WIDTH = 960;
 const JPEG_QUALITY = 82;
 
 async function compressFile(filePath) {
   const ext = path.extname(filePath).toLowerCase();
   const base = path.basename(filePath, ext);
   const dir = path.dirname(filePath);
+  const isTapa = /-tapa$/i.test(base);
+  const maxWidth = isTapa ? TAPA_MAX_WIDTH : MAX_WIDTH;
 
   const meta = await sharp(filePath).metadata();
   let pipeline = sharp(filePath).rotate();
 
-  if (meta.width && meta.width > MAX_WIDTH) {
-    pipeline = pipeline.resize({ width: MAX_WIDTH, withoutEnlargement: true });
+  if (meta.width && meta.width > maxWidth) {
+    pipeline = pipeline.resize({ width: maxWidth, withoutEnlargement: true });
   }
 
   if (ext === '.png') {

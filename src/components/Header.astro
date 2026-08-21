@@ -1,181 +1,143 @@
 ---
 import { site } from '../data/site';
 
-const whatsappUrl = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent('Hola EOS! Quiero contactarlos.')}`;
+const themes = [
+  { key: 'oscuro', name: 'Oscuro', swatch: '#0a0a0c' },
+  { key: 'claro', name: 'Claro', swatch: '#efece4' },
+  { key: 'sangre', name: 'Rojo', swatch: 'oklch(0.55 0.235 26)' },
+];
 ---
 
-<header class="fixed top-0 left-0 right-0 z-50 bg-theme-header">
-  <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
-    <a href="#" class="site-logo display-title text-xl text-theme sm:text-2xl">
-      {site.shortName}
-    </a>
+<aside class="v2-rail">
+  <a href="#top" class="rail-logo" aria-label={site.name}>{site.shortName}</a>
 
-    <nav class="hidden items-center gap-4 md:flex lg:gap-6" aria-label="Principal">
-      {
-        site.nav.map((item) => (
-          <a href={item.href} class="nav-link text-sm">
-            {item.label}
-          </a>
-        ))
-      }
-    </nav>
-
-    <div class="flex items-center gap-2 sm:gap-3">
-      <button
-        type="button"
-        id="theme-toggle"
-        class="theme-toggle"
-        aria-label="Cambiar a modo claro"
-      >
-        <svg
-          class="theme-icon-sun"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="2"
-          aria-hidden="true"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M12 3v2m0 14v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"
-          ></path>
-        </svg>
-        <svg
-          class="theme-icon-moon"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="2"
-          aria-hidden="true"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
-          ></path>
-        </svg>
-      </button>
-
-      <button
-        type="button"
-        id="menu-toggle"
-        class="menu-toggle flex md:hidden"
-        aria-label="Abrir menú"
-        aria-expanded="false"
-        aria-controls="mobile-menu"
-      >
-        <svg
-          class="menu-icon-open"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="2"
-          aria-hidden="true"
-        >
-          <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"></path>
-        </svg>
-        <svg
-          class="menu-icon-close"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="2"
-          aria-hidden="true"
-        >
-          <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"></path>
-        </svg>
-      </button>
-
-      <a
-        href={whatsappUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="btn-primary hidden rounded-full px-3 py-2 text-xs font-semibold md:inline-flex sm:px-4 sm:text-sm"
-      >
-        Escribinos
-      </a>
-    </div>
-  </div>
-</header>
-
-<div
-  id="mobile-menu"
-  class="mobile-menu"
-  aria-hidden="true"
-  inert
->
-  <nav class="mobile-menu-nav" aria-label="Menú mobile">
+  <nav class="rail-nav mono" aria-label="Principal">
     {
       site.nav.map((item) => (
-        <a href={item.href} class="mobile-nav-link">
+        <a href={item.href} class:list={[item.accent && 'is-accent']}>
           {item.label}
         </a>
       ))
     }
   </nav>
 
-  <a
-    href={whatsappUrl}
-    target="_blank"
-    rel="noopener noreferrer"
-    class="btn-primary mobile-menu-cta rounded-full px-6 py-3 text-sm font-semibold"
-  >
-    Escribinos
-  </a>
-</div>
+  <div class="rail-theme">
+    <span class="mono rail-theme-tag">Tema</span>
+    <span class="rail-theme-sep"></span>
+    {
+      themes.map((t) => (
+        <button
+          type="button"
+          class="theme-swatch"
+          data-theme-key={t.key}
+          style={`background:${t.swatch}`}
+          title={`Tema ${t.name}`}
+          aria-label={`Tema ${t.name}`}
+        />
+      ))
+    }
+    <span class="rail-theme-name mono eos-theme-name">Oscuro</span>
+  </div>
+</aside>
 
 <script>
-  const themeToggle = document.getElementById('theme-toggle');
-  const menuToggle = document.getElementById('menu-toggle');
-  const mobileMenu = document.getElementById('mobile-menu');
+  const swatches = Array.from(document.querySelectorAll<HTMLButtonElement>('.theme-swatch'));
+  const nameEls = Array.from(document.querySelectorAll<HTMLElement>('.eos-theme-name'));
+  const names: Record<string, string> = { oscuro: 'Oscuro', claro: 'Claro', sangre: 'Rojo' };
 
-  function applyTheme(theme) {
+  function applyTheme(theme: string) {
     document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-    if (themeToggle) {
-      themeToggle.setAttribute(
-        'aria-label',
-        theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro',
-      );
-    }
+    localStorage.setItem('eos-theme', theme);
+    nameEls.forEach((el) => {
+      el.textContent = names[theme] ?? theme;
+    });
+    swatches.forEach((btn) => {
+      btn.classList.toggle('is-active', btn.dataset.themeKey === theme);
+    });
   }
 
-  themeToggle?.addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme');
-    applyTheme(current === 'light' ? 'dark' : 'light');
-  });
+  const current = document.documentElement.getAttribute('data-theme') || 'oscuro';
+  applyTheme(current);
 
-  function setMenuOpen(open) {
-    if (!mobileMenu || !menuToggle) return;
-    mobileMenu.classList.toggle('is-open', open);
-    mobileMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
-    if (open) {
-      mobileMenu.removeAttribute('inert');
-    } else {
-      mobileMenu.setAttribute('inert', '');
-    }
-    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    menuToggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
-    document.body.style.overflow = open ? 'hidden' : '';
-  }
-
-  menuToggle?.addEventListener('click', () => {
-    const isOpen = mobileMenu?.classList.contains('is-open');
-    setMenuOpen(!isOpen);
-  });
-
-  mobileMenu?.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', () => setMenuOpen(false));
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && mobileMenu?.classList.contains('is-open')) {
-      setMenuOpen(false);
-    }
-  });
-
-  window.matchMedia('(min-width: 768px)').addEventListener('change', (e) => {
-    if (e.matches) setMenuOpen(false);
+  swatches.forEach((btn) => {
+    btn.addEventListener('click', () => applyTheme(btn.dataset.themeKey || 'oscuro'));
   });
 </script>
+
+<style>
+  .v2-rail {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: var(--rail-w);
+    z-index: 800;
+    border-right: 1px solid var(--line);
+    background: var(--bg);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    justify-items: center;
+    padding: 22px 0;
+  }
+
+  .rail-logo {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    background: var(--acc);
+    color: #fff;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    clip-path: polygon(0 0, 100% 0, 100% 72%, 72% 100%, 0 100%);
+  }
+
+  .rail-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    writing-mode: vertical-rl;
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+
+  .rail-nav .is-accent {
+    color: var(--acc);
+  }
+
+  .rail-theme {
+    display: grid;
+    gap: 12px;
+    justify-items: center;
+  }
+
+  .rail-theme-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--acc);
+    background: var(--fg);
+    writing-mode: vertical-rl;
+    padding: 10px 5px;
+  }
+
+  .rail-theme-sep {
+    width: 1px;
+    height: 14px;
+    background: var(--line);
+    display: block;
+  }
+
+  .rail-theme-name {
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--acc);
+    writing-mode: vertical-rl;
+    margin-top: 4px;
+  }
+</style>

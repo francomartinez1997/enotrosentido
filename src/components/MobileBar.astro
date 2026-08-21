@@ -1,0 +1,124 @@
+---
+const themes = [
+  { key: 'oscuro', name: 'Oscuro', swatch: '#0a0a0c' },
+  { key: 'claro', name: 'Claro', swatch: '#efece4' },
+  { key: 'sangre', name: 'Rojo', swatch: 'oklch(0.55 0.235 26)' },
+];
+
+const navItems = [
+  { label: 'Banda', href: '#banda' },
+  { label: 'Disco', href: '#disco' },
+  { label: 'Singles', href: '#singles' },
+  { label: '¿?', href: '#proximo', accent: true },
+  { label: 'Archivo', href: '#archivo' },
+  { label: 'Links', href: '#links' },
+  { label: 'Contacto', href: '#contacto' },
+];
+---
+
+<nav class="v2-bar">
+  <div class="v2-bar__top">
+    <a href="#top" class="v2-bar__logo">EOS</a>
+    <div class="v2-bar__theme">
+      <span class="mono v2-bar__theme-tag">Tema</span>
+      {
+        themes.map((t) => (
+          <button
+            type="button"
+            class="theme-swatch"
+            data-theme-key={t.key}
+            style={`background:${t.swatch}`}
+            title={`Tema ${t.name}`}
+            aria-label={`Tema ${t.name}`}
+          />
+        ))
+      }
+      <span class="mono v2-bar__theme-name eos-theme-name">Oscuro</span>
+    </div>
+  </div>
+
+  <div class="v2-bar__nav mono">
+    {
+      navItems.map((item) => (
+        <a href={item.href} class:list={[item.accent && 'is-accent']}>
+          {item.label}
+        </a>
+      ))
+    }
+  </div>
+</nav>
+
+<style>
+  .v2-bar {
+    display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 850;
+    background: color-mix(in oklab, var(--bg) 92%, transparent);
+    backdrop-filter: blur(14px);
+    border-top: 1px solid var(--line);
+    grid-template-rows: auto auto;
+  }
+
+  .v2-bar__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .v2-bar__logo {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    background: var(--acc);
+    color: #fff;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    clip-path: polygon(0 0, 100% 0, 100% 72%, 72% 100%, 0 100%);
+  }
+
+  .v2-bar__theme {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .v2-bar__theme-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--acc);
+    background: var(--fg);
+    padding: 5px 8px;
+  }
+
+  .v2-bar__theme-name {
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--acc);
+  }
+
+  .v2-bar__nav {
+    display: flex;
+    gap: 22px;
+    overflow-x: auto;
+    padding: 12px 16px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .v2-bar__nav .is-accent {
+    color: var(--acc);
+  }
+</style>

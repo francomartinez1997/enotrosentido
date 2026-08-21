@@ -20,26 +20,94 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
-    <link rel="icon" type="image/x-icon" href="/images/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Gabarito:wght@800&family=Poppins:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <title>{title}</title>
     <script is:inline>
       (function () {
-        var t = localStorage.getItem('theme');
-        if (t !== 'light' && t !== 'dark') t = 'dark';
+        var t = localStorage.getItem('eos-theme');
+        if (t !== 'oscuro' && t !== 'sangre') t = 'oscuro';
         document.documentElement.setAttribute('data-theme', t);
+        if (window.matchMedia('(pointer: fine)').matches) {
+          document.documentElement.classList.add('eos-custom-cursor');
+        }
       })();
     </script>
   </head>
-  <body class="min-h-screen overflow-x-clip">
-    <slot />
+  <body>
+    <div class="v2-root">
+      <slot />
+    </div>
+    <div class="eos-cursor" id="eos-cursor" aria-hidden="true"></div>
+    <div class="eos-cursor-ring" id="eos-cursor-ring" aria-hidden="true"></div>
+
+    <script>
+      // Cursor personalizado — solo en dispositivos con puntero fino (mouse/trackpad)
+      const cur = document.getElementById('eos-cursor');
+      const ring = document.getElementById('eos-cursor-ring');
+      const fine = window.matchMedia('(pointer: fine)').matches;
+
+      if (fine && cur && ring) {
+        document.documentElement.classList.add('eos-custom-cursor');
+        let tx = 0;
+        let ty = 0;
+        let lx = 0;
+        let ly = 0;
+
+        const hotSelector =
+          'a, button, input, textarea, select, label, summary, [role="button"], .theme-swatch, .archive-tile';
+
+        window.addEventListener(
+          'mousemove',
+          (e) => {
+            const hot =
+              e.target instanceof Element && Boolean(e.target.closest(hotSelector));
+            cur.classList.toggle('is-hot', hot);
+            ring.classList.toggle('is-hot', hot);
+            cur.style.left = `${e.clientX}px`;
+            cur.style.top = `${e.clientY}px`;
+            tx = e.clientX;
+            ty = e.clientY;
+            ring.style.opacity = hot ? '0.85' : '0.45';
+          },
+          { passive: true },
+        );
+
+        const loop = () => {
+          lx += (tx - lx) * 0.14;
+          ly += (ty - ly) * 0.14;
+          ring.style.left = `${lx}px`;
+          ring.style.top = `${ly}px`;
+          requestAnimationFrame(loop);
+        };
+        loop();
+      } else {
+        if (cur) cur.style.display = 'none';
+        if (ring) ring.style.display = 'none';
+      }
+
+      // Reveal-on-scroll compartido por todas las secciones con data-reveal
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                (entry.target as HTMLElement).style.animation =
+                  'v2in .85s cubic-bezier(.2,.75,.2,1) forwards';
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1 },
+        );
+        document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
+      }
+    </script>
   </body>
 </html>

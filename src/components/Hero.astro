@@ -2,52 +2,345 @@
 import { site, heroImage } from '../data/site';
 ---
 
-<section class="pt-28 pb-16 md:pt-32 md:pb-24">
-  <div
-    class="mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 md:max-w-2xl md:gap-12 lg:max-w-6xl lg:grid-cols-2 lg:gap-14"
-  >
-    <div class="relative order-2 md:order-1 md:mx-auto md:w-full md:max-w-md lg:order-1 lg:mx-0 lg:max-w-none">
-      <div class="shape-arch relative aspect-[4/5] max-h-[70vh] overflow-hidden border border-theme">
-        <img
-          src={heroImage}
-          alt="En otro sentido — foto de la banda"
-          class="h-full w-full object-cover"
-          loading="eager"
-        />
-      </div>
+<section id="top" class="v2-hero" style="position:relative;">
+  <div class="hero-bg">
+    <div class="hero-bg__wrap" id="eos-hero-wrap">
+      <img
+        src={heroImage}
+        alt="En otro sentido"
+        class="hero-bg__img"
+        loading="eager"
+      />
+      <div class="hero-bg__duo" data-duo="1"></div>
+      <div class="hero-bg__fade"></div>
+    </div>
+  </div>
 
-      <a
-        href={site.social.spotify}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="btn-primary absolute bottom-4 right-4 flex h-16 w-16 items-center justify-center rounded-full text-xs font-bold uppercase tracking-wider"
-        aria-label="Escuchar en Spotify"
-      >
-        Play
-      </a>
+  <div class="hero-content">
+    <div class="hero-tag mono">
+      <span class="hero-tag__dot"></span>Córdoba · rock / pop / _?
     </div>
 
-    <div class="order-1 flex flex-col gap-5 md:order-2 md:items-center md:text-center lg:order-2 lg:items-start lg:text-left lg:py-8">
-      <p class="section-label">{site.tagline}</p>
-
-      <h1 class="hero-title text-[clamp(2.75rem,10vw,5.5rem)] md:text-[clamp(2.5rem,9vw,4.25rem)] lg:text-[clamp(2.75rem,5vw,5.5rem)]">
-        <span class="block text-theme">En otro</span>
-        <span class="block text-accent">sentido</span>
-      </h1>
-
-      <p class="max-w-md text-base leading-relaxed text-theme-muted sm:text-lg md:mx-auto lg:mx-0">
-        Rock moderno desde Córdoba, Argentina. Primer disco <em>La espera</em> — un viaje
-        sonoro entre amistad, romance y el presente.
-      </p>
-
-      <div class="flex flex-wrap gap-3 pt-1 md:justify-center lg:justify-start">
-        <a href="#musica" class="btn-primary rounded-full px-6 py-3 text-sm font-semibold">
-          Escuchar ahora
-        </a>
-        <a href="#galeria" class="btn-secondary rounded-full px-6 py-3 text-sm font-semibold">
-          Ver galería
-        </a>
+    <div class="hero-title-wrap">
+      <span class="hero-scan" aria-hidden="true"></span>
+      <div class="glitch-line" style="--gs-d:0s">
+        <span class="glitch-word" data-text="EN" style="--gd-a:0s;--gd-b:-0.2s">EN</span>
+        <span class="glitch-word" data-text="OTRO" style="--gd-a:-0.35s;--gd-b:-0.2s">OTRO</span>
+      </div>
+      <div class="glitch-line" style="--gs-d:-0.15s">
+        <span
+          class="glitch-word glitch-word--accent"
+          data-text="SENTIDO"
+          style="--gd-a:-0.5s;--gd-b:-0.4s">SENTIDO</span
+        >
       </div>
     </div>
   </div>
+
+  <div class="hero-bar">
+    <div class="hero-bar__cell">
+      <span class="mono">Disco debut</span>
+      <span class="hero-bar__value">La espera · 2024</span>
+    </div>
+    <div class="hero-bar__cell">
+      <span class="mono">Estado</span>
+      <span class="hero-bar__value">Grabando el segundo</span>
+    </div>
+    <a href={site.social.spotify} target="_blank" rel="noopener noreferrer" class="hero-bar__cta mono">
+      Escuchar el disco<span>↗</span>
+    </a>
+  </div>
 </section>
+
+<script>
+  const wrap = document.getElementById('eos-hero-wrap');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function onScroll() {
+    if (!wrap || prefersReducedMotion.matches) return;
+    wrap.style.transform = `translateY(${window.scrollY * 0.2}px)`;
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>
+
+<style>
+  #top {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .hero-bg__wrap {
+    position: absolute;
+    inset: -8%;
+  }
+
+  .hero-bg__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 32%;
+    filter: grayscale(1) contrast(1.45) brightness(1.12);
+  }
+
+  .hero-bg__duo {
+    position: absolute;
+    inset: 0;
+    background: var(--duo);
+    mix-blend-mode: multiply;
+    opacity: var(--duo-op);
+  }
+
+  .hero-bg__fade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.15) 40%, var(--port-shadow) 96%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    align-self: center;
+    padding: 120px 40px 0;
+    width: 100%;
+  }
+
+  .hero-tag {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: #f4f1ea;
+    opacity: 0.78;
+  }
+
+  .hero-tag__dot {
+    width: 10px;
+    height: 10px;
+    background: var(--acc);
+    display: block;
+    transform: rotate(45deg);
+    animation: v2tick 2.4s infinite;
+  }
+
+  .hero-title-wrap {
+    display: grid;
+    margin-top: 26px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-scan {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 16%;
+    background: linear-gradient(180deg, transparent, rgba(126, 240, 255, 0.18), transparent);
+    pointer-events: none;
+    z-index: 3;
+    animation: gScan 3.5s infinite linear;
+  }
+
+  .glitch-line {
+    display: flex;
+    align-items: baseline;
+    gap: 2vw;
+    position: relative;
+    animation: gShift 3.5s infinite steps(1, end);
+    animation-delay: var(--gs-d, 0s);
+  }
+
+  .glitch-word {
+    position: relative;
+    display: inline-block;
+    font-size: clamp(52px, 11vw, 178px);
+    line-height: 0.8;
+    font-weight: 900;
+    font-stretch: 118%;
+    letter-spacing: -0.035em;
+    text-transform: uppercase;
+    color: #f4f1ea;
+  }
+
+  .glitch-word--accent {
+    color: var(--acc);
+  }
+
+  .glitch-word::before,
+  .glitch-word::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    pointer-events: none;
+  }
+
+  .glitch-word::before {
+    color: var(--acc);
+    animation: gA 3.5s infinite steps(1, end);
+    animation-delay: var(--gd-a, 0s);
+  }
+
+  .glitch-word--accent::before {
+    color: #f4f1ea;
+  }
+
+  .glitch-word::after {
+    color: #7ef0ff;
+    mix-blend-mode: screen;
+    animation: gB 3.5s infinite steps(1, end);
+    animation-delay: var(--gd-b, 0s);
+  }
+
+  .hero-est {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #f4f1ea;
+    opacity: 0.65;
+  }
+
+  .hero-bar {
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid var(--line);
+    background: color-mix(in oklab, var(--bg) 90%, transparent);
+    backdrop-filter: blur(8px);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  }
+
+  .hero-bar__cell {
+    padding: 26px 30px;
+    border-right: 1px solid var(--line);
+    display: grid;
+    gap: 8px;
+  }
+
+  .hero-bar__cell > span:first-child {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  .hero-bar__value {
+    font-size: 19px;
+    font-weight: 700;
+  }
+
+  .hero-bar__cta {
+    padding: 26px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    background: var(--acc);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    animation: ctaBreathe 1.5s ease-in-out infinite;
+    transition: background 0.28s ease, color 0.28s ease;
+  }
+
+  html[data-theme='sangre'] .hero-bar__cta {
+    color: var(--fg);
+    animation-name: ctaBreatheSangre;
+  }
+
+  .hero-bar__cta span {
+    display: inline-block;
+    font-size: 14px;
+    line-height: 1;
+    opacity: 0.92;
+    transition: transform 0.28s ease, opacity 0.28s ease;
+  }
+
+  .hero-bar__cta:hover {
+    color: #fff;
+    background: color-mix(in oklab, var(--acc) 78%, black 22%);
+  }
+
+  html[data-theme='sangre'] .hero-bar__cta:hover {
+    color: var(--fg);
+    background: color-mix(in oklab, var(--acc) 82%, white 18%);
+  }
+
+  .hero-bar__cta:hover span {
+    opacity: 1;
+    transform: translate(2px, -2px);
+  }
+
+  @keyframes ctaBreathe {
+    0%,
+    100% {
+      box-shadow: 0 0 22px 2px color-mix(in oklab, var(--acc) 38%, transparent);
+    }
+
+    50% {
+      box-shadow: 0 0 52px 8px color-mix(in oklab, var(--acc) 72%, transparent);
+    }
+  }
+
+  @keyframes ctaBreatheSangre {
+    0%,
+    100% {
+      box-shadow: 0 0 22px 2px rgb(0 0 0 / 0.28);
+    }
+
+    50% {
+      box-shadow: 0 0 52px 8px rgb(0 0 0 / 0.52);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .hero-bar {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      padding: 12px;
+    }
+
+    .hero-bar__cell {
+      border-right: none;
+      border: 1px solid var(--line);
+    }
+
+    .hero-bar__cell,
+    .hero-bar__cta {
+      min-height: 92px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-bar__cta {
+      animation: none;
+      box-shadow: 0 0 36px 4px color-mix(in oklab, var(--acc) 52%, transparent);
+    }
+
+    html[data-theme='sangre'] .hero-bar__cta {
+      box-shadow: 0 0 36px 4px rgb(0 0 0 / 0.38);
+    }
+
+    .hero-bar__cta span {
+      transition: none;
+    }
+
+    .hero-bar__cta:hover span {
+      transform: none;
+    }
+  }
+</style>
