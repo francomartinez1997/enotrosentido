@@ -11,6 +11,9 @@ export const site = {
     instagram: 'https://www.instagram.com/enotrosentido_/',
     linktree: 'https://linktr.ee/eosnetacosmica',
     spotify: 'https://open.spotify.com/intl-es/album/27PHU7vkDNYlOOuBzrtFbm',
+    spotifyFungi: 'https://open.spotify.com/intl-es/album/4Se30w8MxJHGNAi1JeQEWO?si=-jECr3zLRW-FbtjVs__DVg',
+    spotifyEnTusOjos: 'https://open.spotify.com/intl-es/album/1XjOdNOos3q3zTnJCmJ7Hk?si=umuNCmPKT1umymR55a6fwQ',
+    spotifyOjala: 'https://open.spotify.com/intl-es/album/0H7sMhIuRS8gkKtJDM88YJ?si=JdcCGHz4QNuzF8opYK7Xew',
     youtube: 'https://www.youtube.com/@EnOtroSentido',
     tiktok: 'https://www.tiktok.com/@en.otro.sentido',
   },
@@ -20,7 +23,8 @@ export const site = {
   },
   youtube: {
     enVivo: 'Dqpims4Bm0g',
-    fullAlbum: 'HYQnleco0sY',
+    fullAlbum: 'HYQnleco0sY&t=6s',
+    cuantoMas: 'WHqrtQN6AHE',
   },
   nav: [
     { label: 'Banda', href: '#banda' },
@@ -36,7 +40,7 @@ export const site = {
 export const heroImage = '/images/gallery/portada.jpg';
 
 export const aboutText = {
-  lead: 'Un proyecto artísticamente ambicioso y descontracturado. Rock moderno con tintes de pop y géneros experimentales.',
+  lead: 'Un proyecto artísticamente ambicioso y descontracturado. Rock alternativo fusionado con tintes de pop y otros géneros.',
   paragraphs: [
     'La espera es nuestro primer disco: diez canciones que nos tomaron dos años, grabadas entre viajes por el sur y el interior de Córdoba, distintos estudios y distintos productores.',
     'El nombre del álbum resignifica la espera como algo positivo — ese viaje en auto, el café en la ruta, la ansiedad linda de que algo suceda mientras disfrutás el camino.',
@@ -59,28 +63,28 @@ export const galleryImages = [
   { src: '/images/gallery/galeria12.jpg', alt: 'En otro sentido — archivo 12' },
 ] as const;
 
-/** Singles — tapas + fragmento de letra, placeholder hasta que Franco pase los reales */
+/** Singles — tapas + fragmento de letra */
 export const singles = [
   {
     title: 'Fungi',
     meta: 'Single · Spotify',
-    cover: '/images/gallery/galeria9.jpg',
-    href: site.social.spotify,
-    excerpt: '[ fragmento pendiente ]\nacá van dos o tres versos\nde Fungi',
+    cover: '/images/gallery/fungi-tapa.jpg',
+    href: site.social.spotifyFungi,
+    excerpt: '[ fragmento x__ ]\nMe pregunto\nViste al arbol latir?',
   },
   {
     title: 'En tus ojos',
-    meta: 'Single · también en vivo',
-    cover: '/images/gallery/galeria4.jpg',
-    href: site.social.spotify,
-    excerpt: '[ fragmento pendiente ]\nacá van dos o tres versos\nde En tus ojos',
+    meta: 'Single · Spotify',
+    cover: '/images/gallery/entusojos-tapa.jpg',
+    href: site.social.spotifyEnTusOjos,
+    excerpt: '[ fragmento _x_ ]\nDespierto otra vez en cero\nes tu perfume un recuerdo',
   },
   {
-    title: 'Cuánto más',
-    meta: 'Single · La espera',
-    cover: '/images/gallery/galeria11.jpg',
-    href: `https://open.spotify.com/intl-es/track/${site.spotify.featuredTrack}`,
-    excerpt: '[ fragmento pendiente ]\nacá van dos o tres versos\nde Cuánto más',
+    title: 'Ojalá',
+    meta: 'Single · Spotify',
+    cover: '/images/gallery/ojala-tapa.jpg',
+    href: site.social.spotifyOjala,
+    excerpt: '[ fragmento __x ]\nEl verano cae frío\ncuando más lo necesito',
   },
 ] as const;
 
@@ -93,15 +97,21 @@ export const releases = [
   },
   {
     num: '02',
+    title: 'La espera · full álbum video',
+    meta: 'Video completo · YouTube',
+    href: `https://www.youtube.com/watch?v=${site.youtube.fullAlbum}`,
+  },
+  {
+    num: '03',
     title: 'En tus ojos · en vivo',
     meta: 'Pez Volcán 2024 · YouTube',
     href: `https://www.youtube.com/watch?v=${site.youtube.enVivo}`,
   },
   {
-    num: '03',
-    title: 'La espera · full álbum video',
+    num: '04',
+    title: 'Cuánto más · video oficial',
     meta: 'Video completo · YouTube',
-    href: `https://www.youtube.com/watch?v=${site.youtube.fullAlbum}`,
+    href: `https://www.youtube.com/watch?v=${site.youtube.cuantoMas}`,
   },
 ] as const;
 

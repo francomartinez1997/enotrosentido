@@ -56,10 +56,10 @@ import { site, releases } from '../data/site';
         ))
       }
       <div class="disco-studio">
-        <span class="mono disco-studio__label">En estudio</span>
+        <span class="mono eos-eyebrow">En estudio</span>
         <p class="disco-studio__text">
           <span class="disco-studio__mark"
-            >Segundo disco en grabación. Más guitarra, menos paciencia.</span
+            >Segundo disco en grabación. Más instinto, menos paciencia.</span
           >
         </p>
       </div>
@@ -81,13 +81,13 @@ import { site, releases } from '../data/site';
     <div class="disco-video">
       <div class="disco-video__frame">
         <iframe
-          src={`https://www.youtube.com/embed/${site.youtube.fullAlbum}`}
+          src={`https://www.youtube.com/embed/${site.youtube.cuantoMas}`}
           title="La espera · Full álbum"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen></iframe>
       </div>
-      <span class="mono disco-video__caption">La espera · full álbum video</span>
+      <span class="mono disco-video__caption">Cuánto más · video oficial</span>
     </div>
   </div>
 </section>
@@ -237,30 +237,7 @@ import { site, releases } from '../data/site';
   .disco-studio {
     padding: 26px;
     display: grid;
-    gap: 14px;
-  }
-
-  .disco-studio__label,
-  .disco-studio__mark {
-    background: var(--acc);
-    color: #fff;
-    box-decoration-break: clone;
-    -webkit-box-decoration-break: clone;
-  }
-
-  html[data-theme='sangre'] .disco-studio__label,
-  html[data-theme='sangre'] .disco-studio__mark {
-    background: var(--fg);
-    color: var(--bg);
-  }
-
-  .disco-studio__label {
-    display: inline-block;
-    width: fit-content;
-    padding: 0.45em 0.7em;
-    font-size: 10px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
+    gap: 12px;
   }
 
   .disco-studio__text {
@@ -272,19 +249,52 @@ import { site, releases } from '../data/site';
   }
 
   .disco-studio__mark {
+    background: var(--acc);
+    color: #fff;
     padding: 0.18em 0.42em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  html[data-theme='sangre'] .disco-studio__mark {
+    background: var(--fg);
+    color: var(--bg);
   }
 
   .disco-videos {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 34px;
-    max-width: 980px;
+    width: 100%;
   }
 
   .disco-video {
     display: grid;
     gap: 10px;
+    width: 100%;
+    justify-self: center;
+  }
+
+  @media (min-width: 768px) {
+    .disco-video {
+      width: 75%;
+    }
+
+    .disco-video:first-child {
+      justify-self: start;
+    }
+
+    .disco-video:nth-child(2) {
+      justify-self: end;
+    }
+
+    .disco-video:first-child .disco-video__caption {
+      text-align: left;
+    }
+
+    .disco-video:nth-child(2) .disco-video__caption {
+      text-align: right;
+    }
   }
 
   .disco-video__frame {

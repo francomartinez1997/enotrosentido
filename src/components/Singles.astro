@@ -35,8 +35,6 @@ const items = singles.map((s, idx) => ({ ...s, num: String(idx + 1).padStart(2, 
       ))
     }
   </div>
-
-  <span class="mono singles-note">[ tapas y fragmentos de letra provisorios — pasame los reales y los cargo ]</span>
 </section>
 
 <style>
@@ -190,13 +188,5 @@ const items = singles.map((s, idx) => ({ ...s, num: String(idx + 1).padStart(2, 
     border-left: 2px solid var(--acc);
     padding-left: 16px;
     opacity: 0.9;
-  }
-
-  .singles-note {
-    font-size: 10px;
-    letter-spacing: 0.14em;
-    color: var(--dim);
-    border-top: 1px dashed var(--line);
-    padding-top: 14px;
   }
 </style>

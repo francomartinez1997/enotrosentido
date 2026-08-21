@@ -9,6 +9,7 @@
   --fg: #e9e6e0;
   --dim: #8b8884;
   --acc: oklch(0.55 0.235 26);
+  --cursor-bg: var(--acc);
   --acc-deep: #7d0410;
   --line: rgba(233, 230, 224, 0.16);
   --duo: oklch(0.5 0.24 27);
@@ -23,6 +24,7 @@ html[data-theme='claro'] {
   --fg: #131114;
   --dim: rgba(19, 17, 20, 0.58);
   --acc: oklch(0.52 0.235 26);
+  --cursor-bg: var(--acc);
   --line: rgba(19, 17, 20, 0.18);
   --duo: oklch(0.55 0.24 27);
 }
@@ -32,6 +34,8 @@ html[data-theme='sangre'] {
   --bg2: oklch(0.45 0.225 26);
   --fg: #fbf6f2;
   --dim: rgba(251, 246, 242, 0.72);
+  --acc: #0d0203;
+  --cursor-bg: var(--fg);
   --acc: #0d0203;
   --line: rgba(251, 246, 242, 0.28);
   --duo: oklch(0.5 0.24 27);
@@ -292,7 +296,6 @@ textarea:focus {
 .theme-swatch {
   width: 26px;
   height: 26px;
-  cursor: pointer;
   transform: rotate(45deg);
   border: 1px solid var(--line);
   padding: 0;
@@ -307,4 +310,83 @@ textarea:focus {
   box-shadow:
     0 0 0 3px var(--bg),
     0 0 0 4px var(--acc);
+}
+
+/* Cursor personalizado — estilos globales (no scoped) */
+@media (pointer: fine) {
+  html.eos-custom-cursor,
+  html.eos-custom-cursor *,
+  html.eos-custom-cursor *::before,
+  html.eos-custom-cursor *::after,
+  html.eos-custom-cursor a,
+  html.eos-custom-cursor button,
+  html.eos-custom-cursor input,
+  html.eos-custom-cursor textarea,
+  html.eos-custom-cursor select,
+  html.eos-custom-cursor label,
+  html.eos-custom-cursor summary,
+  html.eos-custom-cursor [role='button'],
+  html.eos-custom-cursor .archive-tile,
+  html.eos-custom-cursor .theme-swatch {
+    cursor: none !important;
+  }
+}
+
+@keyframes eos-cursor-hot {
+  0%,
+  100% {
+    background: var(--acc);
+  }
+  50% {
+    background: var(--bg);
+  }
+}
+
+@keyframes eos-cursor-ring-hot {
+  0%,
+  100% {
+    width: 52px;
+    height: 52px;
+    border-color: var(--acc);
+  }
+  50% {
+    width: 64px;
+    height: 64px;
+    border-color: color-mix(in oklch, var(--acc) 55%, var(--bg));
+  }
+}
+
+.eos-cursor {
+  position: fixed;
+  top: -100px;
+  left: -100px;
+  width: 18px;
+  height: 18px;
+  background: var(--cursor-bg);
+  pointer-events: none;
+  z-index: 2147483647;
+  transform: translate(-50%, -50%) rotate(45deg);
+  transition: opacity 0.2s;
+}
+
+.eos-cursor.is-hot {
+  animation: eos-cursor-hot 0.65s ease-in-out infinite;
+}
+
+.eos-cursor-ring {
+  position: fixed;
+  top: -100px;
+  left: -100px;
+  width: 52px;
+  height: 52px;
+  border: 1px solid var(--cursor-bg);
+  pointer-events: none;
+  z-index: 2147483646;
+  transform: translate(-50%, -50%) rotate(45deg);
+  opacity: 0.45;
+  transition: opacity 0.2s;
+}
+
+.eos-cursor-ring.is-hot {
+  animation: eos-cursor-ring-hot 0.45s ease-in-out infinite;
 }

@@ -20,7 +20,7 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
-    <link rel="icon" type="image/x-icon" href="/images/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -34,15 +34,18 @@ const {
         var t = localStorage.getItem('eos-theme');
         if (t !== 'oscuro' && t !== 'sangre') t = 'oscuro';
         document.documentElement.setAttribute('data-theme', t);
+        if (window.matchMedia('(pointer: fine)').matches) {
+          document.documentElement.classList.add('eos-custom-cursor');
+        }
       })();
     </script>
   </head>
   <body>
     <div class="v2-root">
-      <div class="eos-cursor" id="eos-cursor" aria-hidden="true"></div>
-      <div class="eos-cursor-ring" id="eos-cursor-ring" aria-hidden="true"></div>
       <slot />
     </div>
+    <div class="eos-cursor" id="eos-cursor" aria-hidden="true"></div>
+    <div class="eos-cursor-ring" id="eos-cursor-ring" aria-hidden="true"></div>
 
     <script>
       // Cursor personalizado — solo en dispositivos con puntero fino (mouse/trackpad)
@@ -51,22 +54,27 @@ const {
       const fine = window.matchMedia('(pointer: fine)').matches;
 
       if (fine && cur && ring) {
+        document.documentElement.classList.add('eos-custom-cursor');
         let tx = 0;
         let ty = 0;
         let lx = 0;
         let ly = 0;
 
+        const hotSelector =
+          'a, button, input, textarea, select, label, summary, [role="button"], .theme-swatch, .archive-tile';
+
         window.addEventListener(
           'mousemove',
           (e) => {
-            const hot = e.target instanceof Element && e.target.closest('a,button,input,textarea');
-            const s = hot ? 30 : 18;
-            cur.style.width = `${s}px`;
-            cur.style.height = `${s}px`;
-            cur.style.transform = `translate(${e.clientX - s / 2}px,${e.clientY - s / 2}px) rotate(45deg)`;
+            const hot =
+              e.target instanceof Element && Boolean(e.target.closest(hotSelector));
+            cur.classList.toggle('is-hot', hot);
+            ring.classList.toggle('is-hot', hot);
+            cur.style.left = `${e.clientX}px`;
+            cur.style.top = `${e.clientY}px`;
             tx = e.clientX;
             ty = e.clientY;
-            ring.style.opacity = hot ? '1' : '0.45';
+            ring.style.opacity = hot ? '0.85' : '0.45';
           },
           { passive: true },
         );
@@ -74,7 +82,8 @@ const {
         const loop = () => {
           lx += (tx - lx) * 0.14;
           ly += (ty - ly) * 0.14;
-          ring.style.transform = `translate(${lx - 26}px,${ly - 26}px) rotate(45deg)`;
+          ring.style.left = `${lx}px`;
+          ring.style.top = `${ly}px`;
           requestAnimationFrame(loop);
         };
         loop();
@@ -100,36 +109,5 @@ const {
         document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
       }
     </script>
-
-    <style>
-      .eos-cursor {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 18px;
-        height: 18px;
-        background: var(--acc);
-        pointer-events: none;
-        z-index: 9999;
-        transform: translate(-200px, -200px) rotate(45deg);
-        transition:
-          width 0.2s,
-          height 0.2s,
-          opacity 0.2s;
-      }
-
-      .eos-cursor-ring {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 52px;
-        height: 52px;
-        border: 1px solid var(--acc);
-        pointer-events: none;
-        z-index: 9998;
-        transform: translate(-200px, -200px) rotate(45deg);
-        opacity: 0.5;
-      }
-    </style>
   </body>
 </html>

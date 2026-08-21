@@ -102,7 +102,7 @@ import { site, heroImage } from '../data/site';
   .hero-bg__fade {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.15) 40%, var(--bg) 96%);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.15) 40%, var(--port-shadow) 96%);
   }
 
   .hero-content {
@@ -216,7 +216,7 @@ import { site, heroImage } from '../data/site';
     position: relative;
     z-index: 2;
     border-top: 1px solid var(--line);
-    background: color-mix(in oklab, var(--bg) 78%, transparent);
+    background: color-mix(in oklab, var(--bg) 90%, transparent);
     backdrop-filter: blur(8px);
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
