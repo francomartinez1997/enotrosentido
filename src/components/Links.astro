@@ -1,33 +1,70 @@
 ---
-import { externalLinks } from '../data/site';
+import { quickLinks } from '../data/site';
 ---
 
-<section id="links" class="scroll-mt-24 py-16 md:py-24">
-  <div class="mx-auto max-w-6xl px-4 sm:px-6">
-    <p class="section-label mb-3">Enlaces</p>
-    <h2 class="display-title mb-8 text-4xl text-theme sm:text-5xl md:text-6xl">
-      Encontranos
-    </h2>
+<section id="links" data-reveal="1" class="eos-section links">
+  <span class="mono eos-eyebrow">06 / Links</span>
 
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {
-        externalLinks.map((link) => (
-          <a
-            href={link.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="card-hover group border border-theme p-5 transition"
-          >
-            <h3 class="card-title mb-1 font-semibold text-theme transition">
-              {link.title}
-            </h3>
-            <p class="text-sm text-theme-muted">{link.description}</p>
-            <span class="mt-3 inline-block text-xs uppercase tracking-wider text-accent">
-              Abrir →
-            </span>
-          </a>
-        ))
-      }
-    </div>
+  <div class="links-grid">
+    {
+      quickLinks.map((l) => (
+        <a href={l.href} target="_blank" rel="noopener noreferrer" class="links-item">
+          <span class="mono links-item__kind">{l.kind}</span>
+          <span class="links-item__label">{l.label}</span>
+          <span class="mono links-item__arrow">↗</span>
+        </a>
+      ))
+    }
   </div>
 </section>
+
+<style>
+  .links {
+    background: var(--bg2);
+    display: grid;
+    gap: 30px;
+  }
+
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 2px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  .links-item {
+    background: var(--bg2);
+    padding: 28px 24px;
+    display: grid;
+    gap: 10px;
+    align-content: space-between;
+    min-height: 148px;
+    transition:
+      background 0.22s,
+      color 0.22s;
+  }
+
+  .links-item:hover {
+    background: var(--acc);
+    color: #fff;
+  }
+
+  .links-item__kind {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+
+  .links-item__label {
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+
+  .links-item__arrow {
+    font-size: 11px;
+  }
+</style>

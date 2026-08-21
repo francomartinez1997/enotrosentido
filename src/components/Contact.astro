@@ -5,161 +5,176 @@ const whatsappUrl = `https://wa.me/${site.whatsapp}`;
 const hasEmail = site.contactEmail.length > 0;
 ---
 
-<section id="contacto" class="scroll-mt-24 py-16 md:py-24">
-  <div class="mx-auto max-w-6xl px-4 sm:px-6">
-    <div class="grid gap-10 lg:grid-cols-2 lg:gap-14">
-      <div>
-        <p class="section-label mb-3">Hablemos</p>
-        <h2 class="display-title mb-8 text-4xl text-theme sm:text-5xl md:text-6xl">
-          Contacto
-        </h2>
-        <p class="mb-8 max-w-md leading-relaxed text-theme-muted">
-          ¿Querés contratarnos, proponer una colaboración o simplemente decir
-          hola? Escribinos por WhatsApp o dejá un mensaje acá.
-        </p>
+<section id="contacto" data-reveal="1" class="eos-section contacto">
+  <div class="contacto-intro">
+    <span class="mono eos-eyebrow">07 / Contacto</span>
+    <h2 class="eos-h2 contacto-h2">Hablemos</h2>
+    <p class="contacto-lead">Fechas, prensa, colaboraciones o solo decir hola. Contestamos.</p>
 
-        <a
-          href={`${whatsappUrl}?text=${encodeURIComponent('Hola EOS! ')}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="btn-primary inline-flex items-center gap-3 rounded-full px-6 py-3 text-sm font-semibold"
-        >
-          <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path
-              d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
-            ></path>
-          </svg>
-          WhatsApp · +54 9 351 263 0359
-        </a>
-      </div>
-
-      <div class="border border-theme p-5 sm:p-8">
-        {
-          hasEmail ? (
-            <form
-              action={`https://formsubmit.co/${site.contactEmail}`}
-              method="POST"
-              class="space-y-4"
-            >
-              <input type="hidden" name="_subject" value="Contacto desde la web EOS" />
-              <input type="hidden" name="_captcha" value="false" />
-              <input type="text" name="_honey" style="display:none" />
-
-              <div>
-                <label for="name" class="mb-1 block text-sm text-theme-muted">
-                  Nombre
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  required
-                  class="input-theme w-full px-4 py-3"
-                />
-              </div>
-
-              <div>
-                <label for="email" class="mb-1 block text-sm text-theme-muted">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                  class="input-theme w-full px-4 py-3"
-                />
-              </div>
-
-              <div>
-                <label for="message" class="mb-1 block text-sm text-theme-muted">
-                  Mensaje
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows="4"
-                  required
-                  class="input-theme w-full resize-none px-4 py-3"
-                />
-              </div>
-
-              <button
-                type="submit"
-                class="btn-primary w-full rounded-full py-3 text-sm font-semibold"
-              >
-                Enviar mensaje
-              </button>
-            </form>
-          ) : (
-            <form id="contact-form" class="space-y-4">
-              <div>
-                <label for="name" class="mb-1 block text-sm text-theme-muted">
-                  Nombre
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  required
-                  class="input-theme w-full px-4 py-3"
-                />
-              </div>
-
-              <div>
-                <label for="email" class="mb-1 block text-sm text-theme-muted">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                  class="input-theme w-full px-4 py-3"
-                />
-              </div>
-
-              <div>
-                <label for="message" class="mb-1 block text-sm text-theme-muted">
-                  Mensaje
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows="4"
-                  required
-                  class="input-theme w-full resize-none px-4 py-3"
-                />
-              </div>
-
-              <button
-                type="submit"
-                class="btn-primary w-full rounded-full py-3 text-sm font-semibold"
-              >
-                Enviar por WhatsApp
-              </button>
-
-              <p class="text-center text-xs text-theme-subtle">
-                El mensaje se abre en WhatsApp. Para recibir mails en la web,
-                agregá un email en <code class="text-accent">src/data/site.ts</code>.
-              </p>
-            </form>
-          )
-        }
-      </div>
-    </div>
+    <a
+      href={`${whatsappUrl}?text=${encodeURIComponent('Hola EOS! Quiero contactarlos.')}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="mono contacto-cta"
+    >
+      <svg class="contacto-cta__icon" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+        ></path>
+      </svg>
+      WhatsApp · +54 9 351 263 0359
+    </a>
   </div>
+
+  {
+    hasEmail ? (
+      <form
+        action={`https://formsubmit.co/${site.contactEmail}`}
+        method="POST"
+        class="contacto-form"
+      >
+        <input type="hidden" name="_subject" value="Contacto desde la web EOS" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="text" name="_honey" style="display:none" />
+        <input type="text" name="nombre" placeholder="Nombre" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <textarea name="mensaje" placeholder="Mensaje" rows="5" required />
+        <button type="submit" class="mono contacto-submit">Enviar mensaje</button>
+      </form>
+    ) : (
+      <form id="eos-contact-form" class="contacto-form">
+        <input type="text" name="nombre" placeholder="Nombre" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <textarea name="mensaje" placeholder="Mensaje" rows="5" required />
+        <button type="submit" class="mono contacto-submit" id="eos-submit-label">Enviar mensaje</button>
+        <p class="contacto-note">
+          El mensaje se abre en WhatsApp. Para recibir mails en la web, agregá un email en
+          <code class="mono contacto-note__code">src/data/site.ts</code>.
+        </p>
+      </form>
+    )
+  }
 </section>
 
-<script define:vars={{ whatsappUrl }}>
-  const form = document.getElementById('contact-form');
-  form?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const data = new FormData(form);
-    const name = data.get('name');
-    const email = data.get('email');
-    const message = data.get('message');
-    const text = `Hola EOS!\n\nNombre: ${name}\nEmail: ${email}\n\n${message}`;
-    window.open(`${whatsappUrl}?text=${encodeURIComponent(text)}`, '_blank');
-  });
-</script>
+{
+  !hasEmail && (
+    <script define:vars={{ whatsappUrl }}>
+      const form = document.getElementById('eos-contact-form');
+      const submitLabel = document.getElementById('eos-submit-label');
+      form?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const data = new FormData(form);
+        const nombre = data.get('nombre');
+        const email = data.get('email');
+        const mensaje = data.get('mensaje');
+        const text = `Hola EOS!\n\nNombre: ${nombre}\nEmail: ${email}\n\n${mensaje}`;
+        window.open(`${whatsappUrl}?text=${encodeURIComponent(text)}`, '_blank');
+        if (submitLabel) submitLabel.textContent = 'Gracias — te escribimos';
+      });
+    </script>
+  )
+}
+
+<style>
+  .contacto {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 56px;
+    align-items: start;
+    padding-bottom: 90px;
+  }
+
+  .contacto-intro {
+    display: grid;
+    gap: 22px;
+  }
+
+  .contacto-h2 {
+    font-size: clamp(40px, 6.5vw, 112px);
+    line-height: 0.84;
+    font-stretch: 118%;
+    letter-spacing: -0.04em;
+  }
+
+  .contacto-lead {
+    margin: 0;
+    max-width: 440px;
+    font-size: 17px;
+    line-height: 1.6;
+    opacity: 0.78;
+  }
+
+  .contacto-cta {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--acc);
+    color: #fff;
+    padding: 17px 24px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    clip-path: polygon(0 0, 100% 0, 100% 66%, 95% 100%, 0 100%);
+  }
+
+  .contacto-cta:hover {
+    color: #fff;
+  }
+
+  .contacto-cta__icon {
+    width: 18px;
+    height: 18px;
+    flex: none;
+  }
+
+  .contacto-form {
+    display: grid;
+    gap: 2px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  .contacto-form input,
+  .contacto-form textarea {
+    background: var(--bg);
+    border: 0;
+    color: var(--fg);
+    padding: 20px;
+    font-size: 16px;
+    outline: none;
+    resize: vertical;
+  }
+
+  .contacto-submit {
+    background: var(--fg);
+    color: var(--bg);
+    border: 0;
+    padding: 20px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition:
+      background 0.2s,
+      color 0.2s;
+  }
+
+  .contacto-submit:hover {
+    background: var(--acc);
+    color: #fff;
+  }
+
+  .contacto-note {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 14px 20px;
+    font-size: 12px;
+    color: var(--dim);
+    background: var(--bg2);
+  }
+
+  .contacto-note__code {
+    color: var(--acc);
+  }
+</style>

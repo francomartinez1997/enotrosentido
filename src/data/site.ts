@@ -20,21 +20,20 @@ export const site = {
   },
   youtube: {
     enVivo: 'Dqpims4Bm0g',
+    fullAlbum: 'HYQnleco0sY',
   },
   nav: [
-    { label: 'Nosotros', href: '#nosotros' },
-    { label: 'Música', href: '#musica' },
-    { label: 'Galería', href: '#galeria' },
-    { label: 'Links', href: '#links' },
+    { label: 'Banda', href: '#banda' },
+    { label: 'Disco', href: '#disco' },
+    { label: 'Singles', href: '#singles' },
+    { label: '¿?', href: '#proximo', accent: true },
+    { label: 'Archivo', href: '#archivo' },
     { label: 'Contacto', href: '#contacto' },
   ],
 } as const;
 
 /** Imagen principal del hero */
-export const heroImage = '/images/gallery/foto-de-la-banda.jpg';
-
-/** Fondo parallax (solo tema oscuro, desktop) */
-export const parallaxBackgroundImage = '/images/gallery/portada.jpg';
+export const heroImage = '/images/gallery/portada.jpg';
 
 export const aboutText = {
   lead: 'Un proyecto artísticamente ambicioso y descontracturado. Rock moderno con tintes de pop y géneros experimentales.',
@@ -46,97 +45,70 @@ export const aboutText = {
 };
 
 export const galleryImages = [
-  {
-    src: '/images/gallery/galeria1.jpg',
-    alt: 'En otro sentido — galería 1',
-    caption: 'Galería 1',
-  },
-  {
-    src: '/images/gallery/galeria2.jpg',
-    alt: 'En otro sentido — galería 2',
-    caption: 'Galería 2',
-  },
-  {
-    src: '/images/gallery/galeria3.jpg',
-    alt: 'En otro sentido — galería 3',
-    caption: 'Galería 3',
-  },
-  {
-    src: '/images/gallery/galeria4.jpg',
-    alt: 'En otro sentido — galería 4',
-    caption: 'Galería 4',
-  },
-  {
-    src: '/images/gallery/galeria5.jpg',
-    alt: 'En otro sentido — galería 5',
-    caption: 'Galería 5',
-  },
-  {
-    src: '/images/gallery/galeria7.jpg',
-    alt: 'En otro sentido — galería 7',
-    caption: 'Galería 7',
-  },
-  {
-    src: '/images/gallery/galeria8.jpg',
-    alt: 'En otro sentido — galería 8',
-    caption: 'Galería 8',
-  },
-  {
-    src: '/images/gallery/galeria9.jpg',
-    alt: 'En otro sentido — galería 9',
-    caption: 'Galería 9',
-  },
-  {
-    src: '/images/gallery/galeria10.jpg',
-    alt: 'En otro sentido — galería 10',
-    caption: 'Galería 10',
-  },
-  {
-    src: '/images/gallery/galeria11.jpg',
-    alt: 'En otro sentido — galería 11',
-    caption: 'Galería 11',
-  },
-  {
-    src: '/images/gallery/galeria13.jpg',
-    alt: 'En otro sentido — galería 13',
-    caption: 'Galería 13',
-  },
-  {
-    src: '/images/gallery/galeria12.jpg',
-    alt: 'En otro sentido — galería 12',
-    caption: 'Galería 12',
-  },
-];
+  { src: '/images/gallery/galeria1.jpg', alt: 'En otro sentido — archivo 1' },
+  { src: '/images/gallery/galeria2.jpg', alt: 'En otro sentido — archivo 2' },
+  { src: '/images/gallery/galeria3.jpg', alt: 'En otro sentido — archivo 3' },
+  { src: '/images/gallery/galeria4.jpg', alt: 'En otro sentido — archivo 4' },
+  { src: '/images/gallery/galeria5.jpg', alt: 'En otro sentido — archivo 5' },
+  { src: '/images/gallery/galeria7.jpg', alt: 'En otro sentido — archivo 6' },
+  { src: '/images/gallery/galeria8.jpg', alt: 'En otro sentido — archivo 7' },
+  { src: '/images/gallery/galeria9.jpg', alt: 'En otro sentido — archivo 8' },
+  { src: '/images/gallery/galeria10.jpg', alt: 'En otro sentido — archivo 9' },
+  { src: '/images/gallery/galeria11.jpg', alt: 'En otro sentido — archivo 10' },
+  { src: '/images/gallery/galeria13.jpg', alt: 'En otro sentido — archivo 11' },
+  { src: '/images/gallery/galeria12.jpg', alt: 'En otro sentido — archivo 12' },
+] as const;
 
-export const externalLinks = [
+/** Singles — tapas + fragmento de letra, placeholder hasta que Franco pase los reales */
+export const singles = [
   {
-    title: 'La espera · Disco completo',
-    description: '10 canciones · 2024',
-    href: 'https://open.spotify.com/intl-es/album/27PHU7vkDNYlOOuBzrtFbm',
+    title: 'Fungi',
+    meta: 'Single · Spotify',
+    cover: '/images/gallery/galeria9.jpg',
+    href: site.social.spotify,
+    excerpt: '[ fragmento pendiente ]\nacá van dos o tres versos\nde Fungi',
   },
   {
-    title: 'En tus ojos · En vivo',
-    description: 'Pez Volcán 2024',
-    href: 'https://www.youtube.com/watch?v=Dqpims4Bm0g&list=RDDqpims4Bm0g&start_radio=1',
+    title: 'En tus ojos',
+    meta: 'Single · también en vivo',
+    cover: '/images/gallery/galeria4.jpg',
+    href: site.social.spotify,
+    excerpt: '[ fragmento pendiente ]\nacá van dos o tres versos\nde En tus ojos',
   },
   {
-    title: 'La espera · Full álbum video',
-    description: 'Video completo del disco',
-    href: 'https://www.youtube.com/watch?v=HYQnleco0sY',
+    title: 'Cuánto más',
+    meta: 'Single · La espera',
+    cover: '/images/gallery/galeria11.jpg',
+    href: `https://open.spotify.com/intl-es/track/${site.spotify.featuredTrack}`,
+    excerpt: '[ fragmento pendiente ]\nacá van dos o tres versos\nde Cuánto más',
+  },
+] as const;
+
+export const releases = [
+  {
+    num: '01',
+    title: 'La espera · disco completo',
+    meta: '10 canciones · 2024 · Spotify',
+    href: site.social.spotify,
   },
   {
-    title: 'Instagram',
-    description: '@enotrosentido_',
-    href: 'https://www.instagram.com/enotrosentido_/',
+    num: '02',
+    title: 'En tus ojos · en vivo',
+    meta: 'Pez Volcán 2024 · YouTube',
+    href: `https://www.youtube.com/watch?v=${site.youtube.enVivo}`,
   },
   {
-    title: 'TikTok',
-    description: '@en.otro.sentido',
-    href: 'https://www.tiktok.com/@en.otro.sentido',
+    num: '03',
+    title: 'La espera · full álbum video',
+    meta: 'Video completo · YouTube',
+    href: `https://www.youtube.com/watch?v=${site.youtube.fullAlbum}`,
   },
-  {
-    title: 'Linktree',
-    description: 'Todos nuestros links',
-    href: 'https://linktr.ee/eosnetacosmica',
-  },
-];
+] as const;
+
+export const quickLinks = [
+  { kind: 'Streaming', label: 'Spotify', href: site.social.spotify },
+  { kind: 'Video', label: 'YouTube', href: site.social.youtube },
+  { kind: '@enotrosentido_', label: 'Instagram', href: site.social.instagram },
+  { kind: '@en.otro.sentido', label: 'TikTok', href: site.social.tiktok },
+  { kind: 'Todos los links', label: 'Linktree', href: site.social.linktree },
+] as const;

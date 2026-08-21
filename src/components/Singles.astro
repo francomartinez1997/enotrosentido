@@ -1,0 +1,202 @@
+---
+import { singles } from '../data/site';
+
+const items = singles.map((s, idx) => ({ ...s, num: String(idx + 1).padStart(2, '0') }));
+---
+
+<section id="singles" data-reveal="1" class="eos-section singles">
+  <div class="singles-head">
+    <div class="singles-head__title">
+      <span class="mono eos-eyebrow">03 / Singles</span>
+      <h2 class="eos-h2 singles-h2">Tres cortes</h2>
+    </div>
+    <span class="mono singles-head__note">En Spotify</span>
+  </div>
+
+  <div class="singles-grid">
+    {
+      items.map((s) => (
+        <a href={s.href} target="_blank" rel="noopener noreferrer" class="single">
+          <span class="single__cover">
+            <img src={s.cover} alt={s.title} loading="lazy" class="single__img" />
+            <span class="single__duo" aria-hidden="true" />
+            <span class="single__shine" aria-hidden="true" />
+            <span class="mono single__tag">{s.num} · single</span>
+          </span>
+          <span class="single__info">
+            <span class="single__row">
+              <span class="single__title">{s.title}</span>
+              <span class="mono single__arrow">↗</span>
+            </span>
+            <span class="mono single__meta">{s.meta}</span>
+            <span class="single__excerpt">{s.excerpt}</span>
+          </span>
+        </a>
+      ))
+    }
+  </div>
+
+  <span class="mono singles-note">[ tapas y fragmentos de letra provisorios — pasame los reales y los cargo ]</span>
+</section>
+
+<style>
+  .singles {
+    background: var(--bg2);
+    display: grid;
+    gap: 44px;
+  }
+
+  .singles-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 18px;
+  }
+
+  .singles-head__title {
+    display: grid;
+    gap: 14px;
+  }
+
+  .singles-h2 {
+    line-height: 0.86;
+    font-stretch: 112%;
+    letter-spacing: -0.04em;
+  }
+
+  .singles-head__note {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  .singles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+  }
+
+  .single {
+    display: grid;
+    gap: 20px;
+    align-content: start;
+    color: var(--fg);
+  }
+
+  .single__cover {
+    position: relative;
+    display: block;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #000;
+    clip-path: polygon(0 0, 100% 0, 100% 92%, 93% 100%, 0 100%);
+  }
+
+  .single__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(1) contrast(1.35) brightness(1.05);
+    transition:
+      transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+      filter 0.45s ease;
+  }
+
+  .single__duo {
+    position: absolute;
+    inset: 0;
+    background: var(--duo);
+    mix-blend-mode: multiply;
+    opacity: 1;
+    pointer-events: none;
+    transition: opacity 0.45s;
+  }
+
+  .single__shine {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg, transparent 38%, rgba(255, 255, 255, 0.32) 50%, transparent 62%);
+    transform: translateX(-110%);
+    pointer-events: none;
+    transition: transform 0.75s cubic-bezier(0.3, 0.7, 0.2, 1);
+  }
+
+  .single:hover .single__img {
+    filter: none;
+    transform: scale(1.07);
+  }
+
+  .single:hover .single__duo {
+    opacity: 0;
+  }
+
+  .single:hover .single__shine {
+    transform: translateX(110%);
+  }
+
+  .single__tag {
+    position: absolute;
+    left: 14px;
+    bottom: 14px;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.9);
+  }
+
+  .single__info {
+    display: grid;
+    gap: 12px;
+  }
+
+  .single__row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .single__title {
+    font-size: clamp(26px, 2.6vw, 38px);
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    line-height: 0.95;
+  }
+
+  .single__arrow {
+    font-size: 12px;
+    color: var(--acc);
+  }
+
+  .single__meta {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  .single__excerpt {
+    display: block;
+    font-size: clamp(17px, 1.5vw, 21px);
+    line-height: 1.45;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    white-space: pre-line;
+    border-left: 2px solid var(--acc);
+    padding-left: 16px;
+    opacity: 0.9;
+  }
+
+  .singles-note {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    color: var(--dim);
+    border-top: 1px dashed var(--line);
+    padding-top: 14px;
+  }
+</style>

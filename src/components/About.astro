@@ -1,38 +1,126 @@
 ---
 import { aboutText } from '../data/site';
+
+const tags = ['Rock', 'Pop', 'Experimental'];
+const stats = [
+  { value: '1', label: 'Disco', accent: true },
+  { value: '3', label: 'Singles' },
+  { value: '10', label: 'Canciones' },
+];
 ---
 
-<section id="nosotros" class="scroll-mt-24 py-16 md:py-24">
-  <div class="mx-auto max-w-6xl px-4 sm:px-6">
-    <p class="section-label mb-3">Sobre la banda</p>
-    <h2 class="display-title mb-8 text-4xl text-theme sm:text-5xl md:text-6xl">
-      Nosotros
-    </h2>
+<section id="banda" data-reveal="1" class="eos-section">
+  <div class="banda-intro">
+    <span class="mono eos-eyebrow">01 / Banda</span>
+    <h2 class="eos-h2">Rock desde Córdoba</h2>
+    <div class="banda-tags">
+      {tags.map((t) => <span class="mono banda-tag">{t}</span>)}
+    </div>
+  </div>
 
-    <div class="max-w-3xl space-y-5">
-      <p class="text-lg leading-relaxed text-theme sm:text-xl">
-        {aboutText.lead}
-      </p>
+  <div class="banda-body">
+    <p class="banda-lead">{aboutText.lead}</p>
+    {aboutText.paragraphs.map((p) => <p class="banda-p">{p}</p>)}
+
+    <div class="banda-stats">
       {
-        aboutText.paragraphs.map((p) => (
-          <p class="leading-relaxed text-theme-muted">{p}</p>
+        stats.map((s) => (
+          <div class="banda-stats__cell">
+            <div class:list={['banda-stats__value', s.accent && 'is-accent']}>{s.value}</div>
+            <div class="mono banda-stats__label">{s.label}</div>
+          </div>
         ))
       }
     </div>
-
-    <div class="mt-12 grid gap-4 sm:grid-cols-3">
-      <div class="border border-theme p-5">
-        <p class="display-title mb-1 text-4xl text-accent">10</p>
-        <p class="text-sm text-theme-muted">Canciones en La espera</p>
-      </div>
-      <div class="border border-theme p-5">
-        <p class="display-title mb-1 text-4xl text-accent">2024</p>
-        <p class="text-sm text-theme-muted">Disco debut</p>
-      </div>
-      <div class="border border-theme p-5">
-        <p class="display-title mb-1 text-4xl text-accent">CBA</p>
-        <p class="text-sm text-theme-muted">De Córdoba al mundo</p>
-      </div>
-    </div>
   </div>
 </section>
+
+<style>
+  #banda {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 64px;
+    align-items: start;
+  }
+
+  .banda-intro {
+    display: grid;
+    gap: 20px;
+    position: sticky;
+    top: 90px;
+  }
+
+  @media (max-width: 700px) {
+    .banda-intro {
+      position: static;
+    }
+  }
+
+  .banda-tags {
+    display: flex;
+    gap: 2px;
+    margin-top: 6px;
+  }
+
+  .banda-tag {
+    padding: 9px 14px;
+    border: 1px solid var(--line);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    clip-path: polygon(0 0, 100% 0, 100% 66%, 88% 100%, 0 100%);
+  }
+
+  .banda-body {
+    display: grid;
+    gap: 24px;
+    max-width: 660px;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--fg);
+  }
+
+  .banda-lead,
+  .banda-p {
+    margin: 0;
+    opacity: 0.86;
+  }
+
+  .banda-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--line);
+    margin-top: 10px;
+  }
+
+  .banda-stats__cell {
+    padding: 20px 0 20px 20px;
+    border-right: 1px solid var(--line);
+  }
+
+  .banda-stats__cell:first-child {
+    padding-left: 0;
+  }
+
+  .banda-stats__cell:last-child {
+    border-right: 0;
+  }
+
+  .banda-stats__value {
+    font-size: 40px;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .banda-stats__value.is-accent {
+    color: var(--acc);
+  }
+
+  .banda-stats__label {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-top: 8px;
+  }
+</style>
